@@ -1,0 +1,167 @@
+﻿require('rootpath')();
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const jwt = require('_helpers/jwt');
+const errorHandler = require('_helpers/error-handler');
+
+const socket = require("socket.io");
+const color = require("colors");
+const { get_Current_User, user_Disconnect, join_User, get_All_User } = require("./public/model/globalUsers");
+const { on } = require('nodemon');
+let userId = ""
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cors());
+
+// use JWT auth to secure the api
+app.use(jwt());
+
+// api routes
+app.use('/users', require('./public/controller/controller'));
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// let socketConnection = false;
+// app.get('/socket', (req, res) => {
+
+//     console.log("socket api");
+//     socketConnection()
+
+//     res.send("success")
+// })
+
+// function socketConnection() {
+//     console.log("hhhhhhh");
+// }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// global error handler
+app.use(errorHandler);
+
+// start server
+const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
+// const port = 4000;
+const server = app.listen(port, function () {
+    console.log('Server listening on port ' + port);
+});
+
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////// SOCKET IMPLEMETATION /////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+const io = socket(server);
+var c_user;
+
+    //initializing the socket io connection 
+    io.on("connection", (socket) => {
+        // var online = Object.keys(io.engine.clients);
+        // console.log(online);
+        // io.emit('server message', JSON.stringify(online));
+        console.log("inside socket", socket.id);
+        ////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////
+        
+        // var online = Object.keys(io.engine.clients);
+        // io.emit('server message', JSON.stringify(online));
+        
+        
+        ////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////
+        //for a new user joining the room
+        socket.on("joinRoom", ({ username, roomname }) => {
+            //* create user
+
+            console.log("inside socket joinroom", username, roomname);
+            const p_user = join_User(socket.id, username, roomname);
+            console.log(socket.id, "=id");
+            userId = p_user.id
+            console.log("userId = ", userId);
+            socket.join(p_user.room);
+            
+            //display a welcome message to the user who have joined a room
+            socket.emit("message", {
+                userId: p_user.id,
+                username: p_user.username,
+                text: `Welcome ${p_user.username}`,
+            });
+            
+            //displays a joined room message to all other room users except that particular user
+            socket.broadcast.to(p_user.room).emit("message", {
+                userId: p_user.id,
+                username: p_user.username,
+                text: `${p_user.username} has joined the chat`,
+            });
+            ////////////////////////////////////////
+            ///////////////////////////////////////
+            
+            ////////////////////////////////////////
+            ///////////////////////////////////////
+        });
+        
+        socket.on("getonlineusers",()=>{
+            let  c_user = get_All_User();
+            console.log("list of online users ::::::::::::::  ",c_user);
+            socket.emit("onlineUsers",{
+                c_user : c_user,
+                
+            });
+        })
+        
+        
+        
+        //////////////////one to one chat///////////////////
+        socket.on('getMsg', (data) => {
+            console.log("data recieved from one to one  chat client : ",data)
+            let message = data[0].message
+            let userName = data[0].username
+            let id = data[0].sendid
+            console.log(message,userName,id);
+            // socket.join(id)
+            socket.broadcast.to(id).emit("sendMsg", {
+                message,userName,id
+            });
+        });
+    ////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////    
+
+        //user sending message
+        socket.on("chat", (text) => {
+            console.log("inside chat socket", text);
+            //gets the room user and the message sent
+            const p_user = get_Current_User(socket.id);
+            console.log("socket.id = ", socket.id);
+            console.log("p_users = ", p_user);
+
+            io.to(p_user.room).emit("message", {
+                userId: p_user.id,
+                username: p_user.username,
+                text: text,
+            });
+        });
+
+        //when the user exits the room
+        socket.on("disconnect", () => {
+            //the user is deleted from array of users and a left room message displayed
+            const p_user = user_Disconnect(socket.id);
+            console.log("updated users list : ",p_user);
+            if (p_user) {
+                io.to(p_user.room).emit("message", {
+                    userId: p_user.id,
+                    username: p_user.username,
+                    text: `${p_user.username} has left the chat`,
+                });
+            }
+        });
+
+
+
+    });
+
+
+
+
