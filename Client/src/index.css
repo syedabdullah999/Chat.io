@@ -1,0 +1,126 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.heading {
+  margin-left: 47%;
+}
+.heading1 {
+  margin-left: 28%;
+}
+
+.login-form {
+  max-width: 300px;
+}
+.login-form-forgot {
+  float: right;
+}
+.ant-col-rtl .login-form-forgot {
+  float: left;
+}
+.login-form-button {
+  width: 100%;
+}
+
+.regesterForm{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.loginForm{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  
+  transform: translate(-50%, -50%);
+}
+.load{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.userList{
+  content: "";
+  clear: both;
+  display: table;
+  padding-left: 40px;
+  padding-top: 50px;
+  padding-bottom: 30%;
+  padding-right: 5%;
+  MARGIN-LEFT: 0;
+
+  position: relative;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+
+  background-color: rgb(141, 155, 155);
+  /* border: 4px solid rgb(0, 0, 0); */
+
+}
+
+.chat-box{
+  position: absolute;
+  right: 0px;
+  width: 300px;
+  border: 3px solid #73AD21;
+  padding: 10px;
+  border: 1px solid rgb(0, 0, 0);
+}
+
+
+.site-page-header {
+  /* border: 1px solid rgb(0, 0, 0); */
+  border-bottom: 1px solid #ccc;
+  background-color: rgb(141, 155, 155) !important ;
+  
+  
+}
+
+.Home{
+  /* background-color: rgb(141, 155, 155); */
+}
+
+.footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+}
+
+.onlineUsers{
+  top: 200px;
+  position:absolute;
+  right: 0px;
+  height: 200px;
+  width: 300px;
+  border: 3px solid #ffffff;
+  padding: 10px;
+}
+
+.BackgroundColour{
+  /* background: #fff; */
+  /* position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+  background: rgb(141, 155, 155); */
+}
+.gap{
+  margin-top: 40%;
+}

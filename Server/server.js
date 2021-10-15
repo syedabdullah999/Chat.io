@@ -9,6 +9,7 @@ const errorHandler = require('_helpers/error-handler');
 const socket = require("socket.io");
 const color = require("colors");
 const { get_Current_User, user_Disconnect, join_User, get_All_User } = require("./public/model/globalUsers");
+const { get_Current_Group_User, join_Group_User } = require("./public/model/groupChatUsers");
 const { on } = require('nodemon');
 let userId = ""
 
@@ -57,110 +58,151 @@ const server = app.listen(port, function () {
 const io = socket(server);
 var c_user;
 
-    //initializing the socket io connection 
-    io.on("connection", (socket) => {
-        // var online = Object.keys(io.engine.clients);
-        // console.log(online);
-        // io.emit('server message', JSON.stringify(online));
-        console.log("inside socket", socket.id);
-        ////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////
-        
-        // var online = Object.keys(io.engine.clients);
-        // io.emit('server message', JSON.stringify(online));
-        
-        
-        ////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////
-        //for a new user joining the room
-        socket.on("joinRoom", ({ username, roomname }) => {
-            //* create user
+//initializing the socket io connection 
+io.on("connection", (socket) => {
+    // var online = Object.keys(io.engine.clients);
+    // console.log(online);
+    // io.emit('server message', JSON.stringify(online));
+    console.log("inside socket", socket.id);
+    ////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
 
-            console.log("inside socket joinroom", username, roomname);
-            const p_user = join_User(socket.id, username, roomname);
-            console.log(socket.id, "=id");
-            userId = p_user.id
-            console.log("userId = ", userId);
-            socket.join(p_user.room);
-            
-            //display a welcome message to the user who have joined a room
-            socket.emit("message", {
-                userId: p_user.id,
-                username: p_user.username,
-                text: `Welcome ${p_user.username}`,
-            });
-            
-            //displays a joined room message to all other room users except that particular user
-            socket.broadcast.to(p_user.room).emit("message", {
-                userId: p_user.id,
-                username: p_user.username,
-                text: `${p_user.username} has joined the chat`,
-            });
-            ////////////////////////////////////////
-            ///////////////////////////////////////
-            
-            ////////////////////////////////////////
-            ///////////////////////////////////////
+    // var online = Object.keys(io.engine.clients);
+    // io.emit('server message', JSON.stringify(online));
+
+
+    ////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////
+    //for a new user joining the room
+    socket.on("joinRoom", ({ username, roomname }) => {
+        //* create user
+
+        console.log("inside socket joinroom", username, roomname);
+        const p_user = join_User(socket.id, username, roomname);
+        console.log(socket.id, "=id");
+        userId = p_user.id
+        console.log("userId = ", userId);
+        socket.join(p_user.room);
+
+        //display a welcome message to the user who have joined a room
+        socket.emit("message", {
+            userId: p_user.id,
+            username: p_user.username,
+            text: `Welcome ${p_user.username}`,
         });
-        
-        socket.on("getonlineusers",()=>{
-            let  c_user = get_All_User();
-            console.log("list of online users ::::::::::::::  ",c_user);
-            socket.emit("onlineUsers",{
-                c_user : c_user,
-                
-            });
+
+        //displays a joined room message to all other room users except that particular user
+        socket.broadcast.to(p_user.room).emit("message", {
+            userId: p_user.id,
+            username: p_user.username,
+            text: `${p_user.username} has joined the chat`,
+        });
+        ////////////////////////////////////////
+        ///////////////////////////////////////
+        socket.on('typing', (data) => {
+            // console.log("in typing socket");
+            if (data.typing == true)
+                io.emit('display', data)
+            else
+                io.emit('display', data)
         })
-        
-        
-        
-        //////////////////one to one chat///////////////////
-        socket.on('getMsg', (data) => {
-            console.log("data recieved from one to one  chat client : ",data)
-            let message = data[0].message
-            let userName = data[0].username
-            let id = data[0].sendid
-            console.log(message,userName,id);
-            // socket.join(id)
-            socket.broadcast.to(id).emit("sendMsg", {
-                message,userName,id
-            });
+        ////////////////////////////////////////
+        ///////////////////////////////////////
+    });
+
+    socket.on("getonlineusers", () => {
+        let c_user = get_All_User();
+        console.log("list of online users ::::::::::::::  ", c_user);
+        socket.emit("onlineUsers", {
+            c_user: c_user,
+
         });
+    })
+
+
+
+    //////////////////one to one chat///////////////////
+    socket.on('getMsg', (data) => {
+        console.log("data recieved from one to one  chat client : ", data)
+        let message = data[0].message
+        let userName = data[0].username
+        let id = data[0].sendid
+        console.log(message, userName, id);
+        // socket.join(id)
+        socket.broadcast.to(id).emit("sendMsg", {
+            message, userName, id
+        });
+    });
     ////////////////////////////////////////////////////
     ////////////////////////////////////////////////////    
 
-        //user sending message
-        socket.on("chat", (text) => {
-            console.log("inside chat socket", text);
-            //gets the room user and the message sent
-            const p_user = get_Current_User(socket.id);
-            console.log("socket.id = ", socket.id);
-            console.log("p_users = ", p_user);
+    //user sending message
+    socket.on("chat", (text) => {
+        console.log("inside chat socket", text);
+        //gets the room user and the message sent
+        const p_user = get_Current_User(socket.id);
+        console.log("socket.id = ", socket.id);
+        console.log("p_users = ", p_user);
 
+        io.to(p_user.room).emit("message", {
+            userId: p_user.id,
+            username: p_user.username,
+            text: text,
+        });
+    });
+
+    //when the user exits the room
+    socket.on("disconnect", () => {
+        //the user is deleted from array of users and a left room message displayed
+        const p_user = user_Disconnect(socket.id);
+        console.log("updated users list : ", p_user);
+        if (p_user) {
             io.to(p_user.room).emit("message", {
                 userId: p_user.id,
                 username: p_user.username,
-                text: text,
+                text: `${p_user.username} has left the chat`,
             });
-        });
+        }
+    });
 
-        //when the user exits the room
-        socket.on("disconnect", () => {
-            //the user is deleted from array of users and a left room message displayed
-            const p_user = user_Disconnect(socket.id);
-            console.log("updated users list : ",p_user);
-            if (p_user) {
-                io.to(p_user.room).emit("message", {
-                    userId: p_user.id,
-                    username: p_user.username,
-                    text: `${p_user.username} has left the chat`,
-                });
-            }
-        });
 
+    ///////////////////////// group chat //////////////////////////////////
+    socket.on("groupChat", ({ username, roomname }) => {
+
+        console.log("inside socket GROup Chat", username, roomname);
+        const p_user = join_Group_User(socket.id, username, roomname);
+        console.log(socket.id, "=id");
+        userId = p_user.id
+        console.log("userId = ", userId);
+        socket.join(roomname);
+
+        socket.on('typingg', (data) => {
+            // console.log("in typing socket");
+            if (data.typing == true)
+                io.emit('displayy', data)
+            else
+                io.emit('displayy', data)
+        })
 
 
     });
+    socket.on("groupChatMessage", (text) => {
+        console.log("inside chat socket", text);
+        //gets the room user and the message sent
+        const p_user = get_Current_Group_User(socket.id);
+        console.log("socket.id = ", socket.id)
+        console.log("p_users = ", p_user);
+
+        io.to(p_user.room).emit("groupMsg", {
+            userId: p_user.id,
+            username: p_user.username,
+            text: text,
+        });
+    });
+
+
+
+});
 
 
 

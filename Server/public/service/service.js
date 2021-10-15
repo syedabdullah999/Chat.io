@@ -2,7 +2,9 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('_helpers/db');
+const { json } = require('body-parser');
 const User = db.User;
+const Groups = db.Groups;
 
 module.exports = {
     authenticate,
@@ -11,16 +13,18 @@ module.exports = {
     create,
     update,
     createSocket,
-    delete: _delete
+    delete: _delete,
+    createGroup: createGroup,
+    getUserGroup
 };
 
-async function authenticate( userParam ) {
-    console.log("login service",userParam.userName, userParam.password);
+async function authenticate(userParam) {
+    console.log("login service", userParam.userName, userParam.password);
     const user = await User.findOne({ userName: userParam.userName });
-    console.log(user)
+    console.log("dada   :   s", user)
     console.log(userParam.password)
     console.log(user.password)
-    
+
     if (user && bcrypt.compareSync(userParam.password, user.password)) {
         console.log("password correct");
         const token = jwt.sign({ sub: user.id }, config.secret, { expiresIn: '7d' });
@@ -32,52 +36,72 @@ async function authenticate( userParam ) {
 }
 
 async function createSocket() {
-    
+
 
     return console.log("success")
 }
 
 async function getAll() {
+    //  let a = User.find()
+    //  console.log("hey    :     ",a);
+    //  a.map(users => console.log(users))
+    //  a.map((user) => console.log("hehehehe    :   ",user))
+    // console.log("heyyyyyy    :    ",User.find(username));
     return await User.find();
 }
 
 async function getById(id) {
+
     return await User.findById(id);
 }
 
 async function create(userParam) {
     // validate
     try {
-        
-     console.log("A");
-     if (await User.findOne({ username: userParam.userName })) {
-        console.log("B");
-        throw 'Username "' + userParam.userName + '" is already taken';
+
+        const user2 = await User.findOne({ userName: userParam.userName });
+        console.log("user found = ", user2)
+        console.log("A   :  ", userParam.userName, userParam.password);
+        if (user2) {
+            console.log("B");
+            let error = 'Username "' + userParam.userName + '" is already taken'
+            throw error;
+
+        }
+
+        console.log("C");
+        const user = new User(userParam);
+
+        console.log("D");
+        // hash password
+        if (userParam.password) {
+            console.log("E");
+            user.password = bcrypt.hashSync(userParam.password, 10);
+        }
+        console.log("F");
+
+        // save user
+        await user.save()
+        console.log(user)
+        console.log("G");
+        return {
+            success: true,
+            ...user.toJSON(),
+        }
+
+
+
+        // return "successfull register"
     }
-    
-    console.log("C");
-    const user = new User(userParam);
-    
-    console.log("D");
-    // hash password
-    if (userParam.password) {
-        console.log("E");
-        user.password = bcrypt.hashSync(userParam.password, 10);
-    }
-    console.log("F");
-    
-    // save user
-    await user.save()
-    console.log(user)
-    console.log("G");
-    
-}
     catch (error) {
-        console.log("I")
-        return error
+        console.log(error)
+        return {
+            error,
+            success: false
+        }
     }
 
-    
+
 }
 
 async function update(id, userParam) {
@@ -102,4 +126,66 @@ async function update(id, userParam) {
 
 async function _delete(id) {
     await User.findByIdAndRemove(id);
+}
+
+
+
+async function createGroup(groupParam) {
+
+
+    try {
+
+        console.log(groupParam);
+
+        console.log("C");
+        const group = new Groups(groupParam);
+        console.log("inside service before saving  :", group)
+        console.log("D");
+
+
+        // save user
+        await group.save()
+        console.log("after saving  :  ", group)
+        console.log("G");
+        return {
+            ...group.toJSON()
+        }
+    }
+    catch (error) {
+        console.log(error)
+        return error
+    }
+
+}
+
+async function getUserGroup(param){
+
+    try{
+        let data = []
+        // const group = new Gr
+        console.log(param);
+        const group = await Groups.find()
+        let memeber = await group.map(user => user.groupMembers)
+        let name = await group.map(user => user.groupName)
+        for(let i = 0 ; i <memeber.length ; i ++){
+            let array = memeber[i].split(',');
+            if(array.includes(param)){
+                data.push({ groupName: name[i] ,groupMembers : memeber[i]})
+            }
+
+        }
+
+        console.log("groups containing the user ",data);
+        // console.log(g.length);
+        console.log(group);
+        // console.log("aaaaaqa",g);
+        return {
+            // success: true,
+            ...data
+        }
+    }
+    catch (error){
+        console.log("error messagee : ",error);
+        return error
+    }
 }
