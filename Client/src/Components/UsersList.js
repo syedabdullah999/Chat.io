@@ -16,7 +16,7 @@ import '../index.css';
 import { List, Avatar } from 'antd';
 import Headers from "./Headers";
 import { Layout, Menu, Breadcrumb } from 'antd';
-import { Link ,useHistory} from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 
 
@@ -35,25 +35,25 @@ function UsersList({ socket }) {
 
     const [users, setUsers] = useState([{}])
     const [onlineUsers, setOnlineUsers] = useState([{}])
-    useEffect(() => {
+    // useEffect(() => {
 
-        let online = []
-        socket.emit("getonlineusers", {});
-        socket.on("onlineUsers", (c_user) => {
+    //     let online = []
+    //     socket.emit("getonlineusers", {});
+    //     socket.on("onlineUsers", (c_user) => {
 
-            if (c_user == null) {
-                console.log("empty online users");
-            }
-            else {
-                c_user.c_user.map((user) => online.push({ title: user.username, id: user.id }))
-                console.log("List Of All Online Users  : ", online);
-                let online2 = online.filter((i) => i.title != name)
-                console.log(online2);
-                setOnlineUsers(online2)
-            }
-            // history.push('/home')
-        })
-    }, []);
+    //         if (c_user == null) {
+    //             console.log("empty online users");
+    //         }
+    //         else {
+    //             c_user.c_user.map((user) => online.push({ title: user.username, id: user.id }))
+    //             console.log("List Of All Online Users  : ", online);
+    //             let online2 = online.filter((i) => i.title != name)
+    //             console.log(online2);
+    //             setOnlineUsers(online2)
+    //         }
+    //         // history.push('/home')
+    //     })
+    // }, []);
     useEffect(() => {
         axios.get(process.env.REACT_APP_BaseUrl, { headers: { "Authorization": `Bearer ${token}` } })
             .then(res => {
@@ -71,23 +71,41 @@ function UsersList({ socket }) {
                 toast.error('Invalid Username Or Password')
             }
             );
+        let a = setInterval(() => {
+            let online = []
+            socket.emit("getonlineusers", {});
+            socket.on("onlineUsers", (c_user) => {
 
+                if (c_user == null) {
+                    console.log("empty online users");
+                }
+                else {
+                    c_user.c_user.map((user) => online.push({ title: user.username, id: user.id }))
+                    console.log("List Of All Online Users  : ", online);
+                    let online2 = online.filter((i) => i.title != name)
+                    console.log(online2);
+                    setOnlineUsers(online2)
+                }
+                // history.push('/home')
+            })
+            clearInterval(a)
+        }, 100)
 
     }, []);
 
     useEffect(() => {
 
-        axios.get(process.env.REACT_APP_BaseUrl+'/group/'+name, { headers: { "Authorization": `Bearer ${token}` }})
+        axios.get(process.env.REACT_APP_BaseUrl + '/group/' + name, { headers: { "Authorization": `Bearer ${token}` } })
             .then(res => {
                 console.log("Get User Groups DATA      : ", res.data);
                 let data = []
-                console.log("user group name    :   ",res.data.length);
+                console.log("user group name    :   ", res.data.length);
                 let g = res.data
                 // debugger;
                 let len = Object.keys(res.data).length
-                for(let i=0; i <len ; i++){
+                for (let i = 0; i < len; i++) {
                     console.log("inside loop");
-                    data.push({ title:  g[i].groupName})
+                    data.push({ title: g[i].groupName })
                 }
                 // for ( let g in res.data){
                 //     console.log("inside loop   :  " ,g);
@@ -95,7 +113,7 @@ function UsersList({ socket }) {
                 // }
                 // g.forEach(element => { 
                 //     console.log("for each" , element);
-                    
+
                 // });
                 // res.map((group) => data.push({ title: group.groupName }))
                 // res.map((group) => console.log("Group name is :",group.groupName))

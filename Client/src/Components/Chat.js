@@ -7,6 +7,7 @@ import Headers from "./Headers";
 import UsersList from "./UsersList";
 import { Footer } from "antd/lib/layout/layout";
 import Home from "./Home";
+import { MessagesAction } from "../actions/message";
 
 
 function Chat({ username, roomname, socket }) {
@@ -27,6 +28,7 @@ function Chat({ username, roomname, socket }) {
     dispatch(process(encrypt, msg, cipher));
   };
 
+  const data2 = useSelector(state => state.Messages)
   useEffect(() => {
       console.log("inside useeffect", socket , username,roomname);
     socket.on("message", (data) => {
@@ -42,6 +44,8 @@ function Chat({ username, roomname, socket }) {
         username: data.username,
         text: ans,
       });
+      // dispatch(MessagesAction({ name: data.username, text: ans}));
+
       setMessages([...temp]);
     });
     socket.on("onlineUsers", (c_user) => {
@@ -67,6 +71,7 @@ function Chat({ username, roomname, socket }) {
     if (text !== "") {
       //encrypt here
       const ans = to_Encrypt(text);
+      console.log("message gto be sent",ans);
       socket.emit("chat", ans);
       setText("");
     }
@@ -75,13 +80,14 @@ function Chat({ username, roomname, socket }) {
   const onlineUsers = () =>{
       console.log("inside online user socket call");
   }
+
   const messagesEndRef = useRef(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  };
+  // const scrollToBottom = () => {
+  //   messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  // };
 
-//   useEffect(scrollToBottom, [messages]);
+  // useEffect(scrollToBottom, [messages]);
 
   console.log(messages, "mess");
 
@@ -135,7 +141,6 @@ function Chat({ username, roomname, socket }) {
                     type=false
                     socket.emit('typing', {user:username, typing:type})
                   }, 4000);
-
         }if(!e){
             console.log("not pressing key");
             type=false

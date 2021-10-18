@@ -91,6 +91,11 @@ code {
 
 .Home{
   /* background-color: rgb(141, 155, 155); */
+  /* background: url(./image.jpg);
+    background-position: no-repeat;
+    background-size:cover;
+    border: 2px solid black; */
+
 }
 
 .footer{

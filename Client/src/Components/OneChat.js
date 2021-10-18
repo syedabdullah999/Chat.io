@@ -11,204 +11,224 @@ import { useSelector, connect } from 'react-redux';
 import Home from "./Home";
 import { toast } from 'react-toastify';
 import { chatName } from "../reducers/chatName";
+import { useParams, useLocation, useHistory, useRouteMatch } from 'react-router-dom';
+import Chat from "./Chat";
 toast.configure()
 
 
 function OneChat({ id, username, socket }) {
 
-    // console.log("iD'SSSSSS: ",currentId,id);
+  // console.log("iD'SSSSSS: ",currentId,id);
+  // const history = useHistory();
+  // const initialState = {
+  //   userId: "",
+  //   username: "",
+  //   text: "",
+  // }
+  // // setText2 = true
+  console.log("hello", id, socket.id);
+  const [text, setText] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [displayMsg, setDisplayMsg] = useState([]);
+  const [user, setUser] = useState(false)
+  const [myUser, setMyUser] = useState("")
+  // const initialState = []
+  const dispatch = useDispatch();
 
-    const initialState = {
-        userId: "",
-        username: "",
-        text: "",
+  const name = useSelector(state => state.chatName.name)
+  const currentName = useSelector(state => state.SignIn.token.name)
+
+
+  const dispatchProcess = (encrypt, msg, cipher) => {
+    dispatch(process(encrypt, msg, cipher));
+  };
+
+  useEffect(() => {
+    if (name == null) {
+      console.log("inside store name check if null");
+      dispatch(oneChatName(username));
+
     }
-    // setText2 = true
-    console.log("hello",id , socket.id);
-    const [text, setText] = useState("");
-    const [messages, setMessages] = useState([]);
-    const [displayMsg, setDisplayMsg] = useState([]);
-    const [user, setUser] = useState(false)
-    const [myUser , setMyUser] = useState("")
-    // const initialState = []
-    const dispatch = useDispatch();
-    
-    const name = useSelector(state => state.chatName.name)
-    const currentName = useSelector(state => state.SignIn.token.name)
 
-        
-        const dispatchProcess = (encrypt, msg, cipher) => {
-            dispatch(process(encrypt, msg, cipher));
-        };
-        
-        useEffect(() => {
-        if(name == null){
-            console.log("inside store name check if null");
-            dispatch(oneChatName(username));
-    
-        }
 
-        
-            console.log("inside id checker condition");
-        socket.on("sendMsg", (res) => {
-            console.log("send message response  :   ",res);
-            console.log("response from one to one chat : ",res.message , res.userName);
-            setMyUser(res.userName)
+    console.log("inside id checker condition");
+    socket.on("sendMsg", (res) => {
 
-            if(res.id==socket.id){
-                
-            
+      // history.push(`/oneChat/${res.id}/${res.userName}`)
+      console.log("send message response  :   ", res);
+      console.log("response from one to one chat : ", res.message, res.userName);
+      setMyUser(res.userName)
+
+      // if (res.id == socket.id) {
+
+
         // if(uName == username){
-            const ans = to_Decrypt(res.message, res.userName);
-                  console.log("inside message socket",ans);
-                  dispatchProcess(false, ans, res.message);
-                  console.log("inside message socket",ans);
-                  let temp = messages;
-                  temp.push({
-                        userId: res.id,
-                        username: res.userName,
-                        text: ans,
-                      });
+        const ans = to_Decrypt(res.message, res.userName);
+        console.log("inside message socket", ans);
+        dispatchProcess(false, ans, res.message);
+        console.log("inside message socket", ans);
+        let temp = messages;
+        temp.push({
+          userId: res.id,
+          username: res.userName,
+          text: ans,
+        });
 
-                          let data = displayMsg
-                          data.push({
-                              userId: id,
-                              username: username,
-                              text: ans
-                            })
-                            setMessages([...temp])
-                            // setDisplayMsg([...data])
-                            // console.log("msgss      :     ",displayMsg);
-                            // setMessages([...messages],[...displayMsg]);
-                            // // setMessages([...data])
-                            
-                            console.log("messagesssssss    :    ",messages);
-                            toast.success("NEW MESSAGE FROM ",name)
-                    }
-                    });
-                
-                console.log("outside ID cheker");
-                if(name != username){
-                    console.log("setting field values to nulll");
-                    
-                  setText("")
-                  setMessages([])
-                  console.log("after null set",messages);
-    
-                  dispatch(oneChatName(username));
-                }            
-                    
-                
-            },[username]);
-            // useEffect(() => {
-            //                 },[]);
+        let data = displayMsg
+        data.push({
+          userId: id,
+          username: data.username,
+          text: ans
+        })
+        setMessages([...temp])
+        // setDisplayMsg([...data])
+        // console.log("msgss      :     ",displayMsg);
+        // setMessages([...messages],[...displayMsg]);
+        // // setMessages([...data])
 
-    
-    
-    //   console.log("inside useeffect", socket , username,roomname);
-    //     socket.on("message", (data) => {
-        //       //decypt
-        //       console.log("message response from socket :", data);
-        //       const ans = to_Decrypt(data.text, data.username);
-        //       console.log("inside message socket",data);
-        //       dispatchProcess(false, ans, data.text);
-        //       console.log("inside message socket",ans);
-        //       let temp = messages;
-        //       temp.push({
-            //         userId: data.userId,
-            //         username: data.username,
-            //         text: ans,
-            //       });
-            //       setMessages([...temp]);
-            //     });
-            //     socket.on("onlineUsers", (c_user) => {
-                //         console.log("List Of All Online Users  : ",c_user);
-                //     })
-                //   }, []);
-                
-                const sendData = () => {
-                    if (text !== "") {
-                        //encrypt here
+        console.log("messagesssssss    :    ", messages);
+        // toast.success("NEW MESSAGE FROM ", name)
+      // }
+    });
 
-                        const ans = to_Encrypt(text);
-                        let data = []
-                        data.push({
-                            sendid: id,
-                            username: username,
-                            message: ans
-                        })
-                        // setDisplayMsg([...data])
-                        socket.emit("getMsg", data)
-                        //   socket.on("sendMsg", (data) => {
-                            
-                            //     console.log("response from one to one chat : ",data);
-                            
-                            // });
-                            setText("");
-                        }
-                    };
-                    
-                    //   const onlineUsers = () =>{
-                        //       console.log("inside online user socket call");
-                        //   }
+    console.log("outside ID cheker");
+    if (name != username) {
+      console.log("setting field values to nulll");
+
+      setText("")
+      setMessages([])
+      console.log("after null set", messages);
+
+      dispatch(oneChatName(username));
+    }
+
+
+  }, [id]);
+  // useEffect(() => {
+  //                 },[]);
+
+
+
+  //   console.log("inside useeffect", socket , username,roomname);
+  //     socket.on("message", (data) => {
+  //       //decypt
+  //       console.log("message response from socket :", data);
+  //       const ans = to_Decrypt(data.text, data.username);
+  //       console.log("inside message socket",data);
+  //       dispatchProcess(false, ans, data.text);
+  //       console.log("inside message socket",ans);
+  //       let temp = messages;
+  //       temp.push({
+  //         userId: data.userId,
+  //         username: data.username,
+  //         text: ans,
+  //       });
+  //       setMessages([...temp]);
+  //     });
+  //     socket.on("onlineUsers", (c_user) => {
+  //         console.log("List Of All Online Users  : ",c_user);
+  //     })
+  //   }, []);
+
+  const sendData = () => {
+    if (text !== "") {
+
+      let temp = messages;
+      temp.push({
+        userId: id,
+        username: username,
+        text: text,
+      });
+
+      setMessages([...temp])
+
+      //encrypt here
+
+      const ans = to_Encrypt(text);
+      let data = []
+      data.push({
+        sendid: id,
+        username: username,
+        message: ans
+      })
+      // setDisplayMsg([...data])
+      socket.emit("getMsg", data)
+      //   socket.on("sendMsg", (data) => {
+
+      //     console.log("response from one to one chat : ",data);
+
+      // });
+      setText("");
+      // getMessages()
+    }
+  };
+
+  //   const onlineUsers = () =>{
+  //       console.log("inside online user socket call");
+  //   }
   const messagesEndRef = useRef(null);
 
-//   const scrollToBottom = () => {
-//     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-//   };
+  //   const scrollToBottom = () => {
+  //     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  //   };
 
-// //   useEffect(scrollToBottom, [messages]);
+  // //   useEffect(scrollToBottom, [messages]);
 
-//   console.log(messages, "mess");
+  //   console.log(messages, "mess");
 
   return (
-      <>
-      <Home socket={socket}/>
-<div className = "chatBoxLeft2">
-    <div className="chat">
-    <h1>One To One Chat </h1>
-      <div className="user-name">
-        <h2>
-          {username} 
-          {/* <span style={{ fontSize: "0.7rem" }}>in {roomname}</span> */}
-        </h2>
+    <>
+      <Home socket={socket} />
+      {/* <Chat
+        username={currentName}
+        roomname={"Global"}
+        socket={socket}
+      /> */}
+      <div className="chatBoxLeft2">
+        <div className="chat">
+          <h1>One To One Chat </h1>
+          <div className="user-name">
+            <h2>
+              {currentName}
+              {/* <span style={{ fontSize: "0.7rem" }}>in {roomname}</span> */}
+            </h2>
+          </div>
+          <div className="chat-message">
+            {messages.map((i) => {
+              if (i.username === username) {
+                return (
+                  <div className="message">
+                    <p>{i.text}</p>
+                    <span>{name}</span>
+                  </div>
+                );
+              } else {
+                return (
+                  <div className="message mess-right">
+                    <p>{i.text} </p>
+                    <span>{currentName}</span>
+                  </div>
+                );
+              }
+            })}
+            <div ref={messagesEndRef} />
+          </div>
+          <div className="send">
+            <input
+              placeholder="enter your message"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  sendData();
+                }
+              }}
+            ></input>
+            <button onClick={sendData}>Send</button>
+          </div>
+        </div>
+        {/* <button onClick={onlineUsers}>Send</button> */}
       </div>
-      <div className="chat-message">
-        {messages.map((i) =>  {
-          if (i.userName === username) {
-            return (
-              <div className="message">
-                <p>{i.text}</p>
-                <span>{i.username}</span>
-              </div>
-            );
-          } else{
-            return (
-              <div className="message mess-right">
-                <p>{i.text} </p>
-                <span>{i.username}</span>
-              </div>
-            );
-          }
-        })}
-        <div ref={messagesEndRef} />
-      </div>
-      <div className="send">
-        <input
-          placeholder="enter your message"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          onKeyPress={(e) => {
-            if (e.key === "Enter") {
-              sendData();
-            }
-          }}
-        ></input>
-        <button onClick={sendData}>Send</button>
-      </div>
-    </div>
-      {/* <button onClick={onlineUsers}>Send</button> */}
-    </div>
     </>
   );
 }

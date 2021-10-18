@@ -55,7 +55,7 @@ function GroupsChat(props) {
     const name = useSelector(state => state.SignIn.token.name)
     let roomname = props.match.params.groupname
     let username = name
-    socket.emit("groupChat", { username,roomname });
+    socket.emit("groupChat", { username, roomname });
 
 
     return (
