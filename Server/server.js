@@ -10,6 +10,8 @@ const socket = require("socket.io");
 const color = require("colors");
 const { get_Current_User, user_Disconnect, join_User, get_All_User } = require("./public/model/globalUsers");
 const { get_Current_Group_User, join_Group_User } = require("./public/model/groupChatUsers");
+const { get_All_Messages, save_Message} = require("./public/model/messages")
+// const {  }
 const { on } = require('nodemon');
 let userId = ""
 
@@ -127,6 +129,7 @@ io.on("connection", (socket) => {
         let message = data[0].message
         let userName = data[0].username
         let id = data[0].sendid
+        // let msgSave = save-Messages(data);
         console.log(message, userName, id);
         // socket.join(id)
         socket.broadcast.to(id).emit("sendMsg", {
@@ -141,6 +144,9 @@ io.on("connection", (socket) => {
         console.log("inside chat socket", text);
         //gets the room user and the message sent
         const p_user = get_Current_User(socket.id);
+        const msg = save_Message(p_user.username, text)
+
+        console.log("saved message  :  ",msg);
         console.log("socket.id = ", socket.id);
         console.log("p_users = ", p_user);
 
@@ -150,6 +156,15 @@ io.on("connection", (socket) => {
             text: text,
         });
     });
+
+    socket.on("getMessages",() => {
+        const msg = get_All_Messages()
+        console.log("inside get all message socket  :  ",msg);
+        
+        socket.emit("displayMsg",{
+            msg: msg
+        })
+    })
 
     //when the user exits the room
     socket.on("disconnect", () => {

@@ -15,6 +15,7 @@ import Login from './Login';
 import ChatComponent from './ChatComponenet';
 import CreateGroup from './CreateGroup';
 import Home from './Home';
+
 // import SocketCon from './SocketCon';
 // import { Socket } from 'socket.io-client';
 
@@ -161,9 +162,11 @@ function Headers({ socket }) {
   return (
     <>
       {/* <SocketCon socket={socket} /> */}
-
+      <div className="headerFix">
       <PageHeader
         className="site-page-header"
+        
+        // {...<Button>sss</Button>}
         onBack={logout}
         title={<strong><a onClick={Reset}> {name} </a></strong>}
         subTitle="Welcome To Chat.io"
@@ -172,6 +175,7 @@ function Headers({ socket }) {
         </Link>,
         <Button key="2" type="dashed" onClick={Group}> Create Group </Button>]}
       />
+      </div>
     </>
   )
 }

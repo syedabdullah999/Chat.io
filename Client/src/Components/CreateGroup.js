@@ -23,14 +23,14 @@ import Group from 'rc-image/lib/PreviewGroup';
 
 
 function CreateGroup(props) {
-
+  const name = useSelector(state => state.SignIn.token.name)
     const history = useHistory();
     const [show, setShow] = useState(true);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const token = useSelector(state => state.SignIn.token.token)
     const [users, setUsers] = useState([{}])
-    const [members, setMembers] = useState("")
+    const [members, setMembers] = useState(name.concat(","))
     const [groupName, setGroupName] = useState("")
     const [value, setValue] = useState();
 
@@ -43,9 +43,10 @@ function CreateGroup(props) {
             console.log("Get All Api Response : ", res.data);
             let data = []
             console.log();
-            res.data.map((user) => data.push({ title: user.userName }))
+            res.data.map((user) => user.userName == name ? delete user.userName: data.push({ title: user.userName }))
             // setUsers(data)
             console.log(data);
+            
             setUsers(data)
           }).catch((e) => {
     
@@ -79,6 +80,7 @@ function CreateGroup(props) {
             // window.removeEventListener.
             // window.location.reload(false);
             
+            
           }).catch((e) => {
     
             console.log("error response", e)
@@ -87,6 +89,7 @@ function CreateGroup(props) {
             // toast.error('Invalid Username Or Password')
           }
           );
+          // history.push("/home")
         }
     return (
         <>
@@ -102,6 +105,7 @@ function CreateGroup(props) {
             setGroupName(e.target.value)}
             ></Input>
         <span>{members}</span>
+        {/* <span>-----------</span> */}
         {/* <Modal.Title>Add participants</Modal.Title> */}
         <List
           itemLayout="horizontal"

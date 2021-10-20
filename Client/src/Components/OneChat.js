@@ -73,13 +73,13 @@ function OneChat({ id, username, socket }) {
           username: res.userName,
           text: ans,
         });
-
-        let data = displayMsg
-        data.push({
-          userId: id,
-          username: data.username,
-          text: ans
-        })
+        
+        // let data = displayMsg
+        // data.push({
+        //   userId: id,
+        //   username: data.username,
+        //   text: ans
+        // })
         setMessages([...temp])
         // setDisplayMsg([...data])
         // console.log("msgss      :     ",displayMsg);
@@ -103,7 +103,7 @@ function OneChat({ id, username, socket }) {
     }
 
 
-  }, [id]);
+  }, []);
   // useEffect(() => {
   //                 },[]);
 
@@ -133,7 +133,7 @@ function OneChat({ id, username, socket }) {
   const sendData = () => {
     if (text !== "") {
 
-      let temp = messages;
+      let temp = messages
       temp.push({
         userId: id,
         username: username,
@@ -184,7 +184,7 @@ function OneChat({ id, username, socket }) {
         roomname={"Global"}
         socket={socket}
       /> */}
-      <div className="chatBoxLeft2">
+      <div className="chatBoxLeft">
         <div className="chat">
           <h1>One To One Chat </h1>
           <div className="user-name">

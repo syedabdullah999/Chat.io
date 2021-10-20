@@ -28,6 +28,32 @@ function Chat({ username, roomname, socket }) {
     dispatch(process(encrypt, msg, cipher));
   };
 
+  useEffect(() => {
+    socket.emit("getMessages")
+
+    socket.on("displayMsg", (data)=> {
+      console.log("message history   :   ",data);
+      let d = data.msg
+      let len = Object.keys(d).length
+      
+      for (let i=0 ; i<len ; i++){
+      const ans = to_Decrypt(d[i].message, d[i].username);
+      let temp = messages;
+      temp.push({
+        userId: socket.id,
+        username: d[i].username,
+        text: ans,
+      });
+      // dispatch(MessagesAction({ name: data.username, text: ans}));
+
+      setMessages([...temp]);
+
+      // console.log("++++++++++++++++", d[i].username);
+    }
+    })
+
+  }, []);
+
   const data2 = useSelector(state => state.Messages)
   useEffect(() => {
       console.log("inside useeffect", socket , username,roomname);

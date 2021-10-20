@@ -152,7 +152,8 @@ function UsersList({ socket }) {
         <>
             <div className="userList">
                 <h1> User List </h1>
-                <List
+                
+                <List className="userHover"
                     itemLayout="horizontal"
                     dataSource={users}
                     renderItem={(item, ind) => (
@@ -168,9 +169,12 @@ function UsersList({ socket }) {
 
                     )}
                 />
+               
+
                 <div className="gap"></div>
+                
                 <h1>Groups</h1>
-                <List
+                <List className="userHover"
                     itemLayout="horizontal"
                     dataSource={userGroups}
                     renderItem={(item, ind) => (

@@ -51,17 +51,22 @@ code {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.userHover{
+  position: static !important;
+}
 .userList{
   content: "";
-  clear: both;
+  top: 90px;
+  position: static !important;
+  /* clear: both; */
   display: table;
   padding-left: 40px;
-  padding-top: 50px;
-  padding-bottom: 30%;
+  padding-top: 90px;
+  padding-bottom: 10%;
   padding-right: 5%;
   MARGIN-LEFT: 0;
 
-  position: relative;
+  /* position: relative; */
   left: 0;
   bottom: 0;
   height: 100%;
@@ -79,10 +84,15 @@ code {
   padding: 10px;
   border: 1px solid rgb(0, 0, 0);
 }
-
+.headerFix{
+  position: fixed;
+  width: 100%;
+  z-index: 99999 !important;
+}
 
 .site-page-header {
   /* border: 1px solid rgb(0, 0, 0); */
+  /* position: */
   border-bottom: 1px solid #ccc;
   background-color: rgb(141, 155, 155) !important ;
   
@@ -109,7 +119,7 @@ code {
 
 .onlineUsers{
   top: 200px;
-  position:absolute;
+  position:fixed;
   right: 0px;
   height: 200px;
   width: 300px;
