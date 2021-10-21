@@ -26,11 +26,12 @@
 //     scrollbar-track-color: $background-color;
 //   }
 // }
+
 .chatBoxLeft{
   position: fixed;
   top: 50%;
   left: 50%;
-  
+  border-radius: 5px;
   transform: translate(-50%, -50%);
 }
 .chatBoxLeft2{
@@ -43,10 +44,11 @@
 .chat {
   width: 400px;
   height: 600px;
-  background-color: rgb(141, 155, 155) !important ;
+  background-color: rgb(66, 148, 173)!important ;
   padding: 1rem;
   display: flex;
   flex-direction: column;
+  border-radius: 10px;
   justify-content: space-between;
   .user-name {
     text-align: start;
@@ -68,16 +70,17 @@
 
     .message {
       margin-left: 0px;
-      max-width: 220px;
+      max-width: 200px;
       padding-left: 0.5rem;
-
+      margin-bottom: 5px;
       p {
         font-size: 1rem;
-        background-color: #02251d;
-        padding: 1rem;
+        background-color: DarkSlateGrey;
+        padding: 0.4rem 0.8REM;
         border-radius: 0px 10px 10px 10px;
         font-weight: 300;
-        color: #b4b6be;
+        color: #fffdfd;
+        margin-bottom: -5px;
       }
 
       span {
@@ -105,6 +108,7 @@
         text-align: end;
         padding-left: 0rem;
         padding-right: 0.5rem;
+        margin-top: 5px;
       }
     }
   }
@@ -127,8 +131,9 @@
     button {
       width: 20%;
       border: none;
-      background-color:rgb(58, 243, 12);
+      background-color:DarkSlateGrey;
       border-radius: 0px 5px 5px 0px;
+      color: white;
       &:hover {
         cursor: pointer;
       }

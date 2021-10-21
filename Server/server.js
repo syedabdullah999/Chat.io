@@ -115,6 +115,12 @@ io.on("connection", (socket) => {
     socket.on("getonlineusers", () => {
         let c_user = get_All_User();
         console.log("list of online users ::::::::::::::  ", c_user);
+        const ids = c_user.map(o => o.id)
+        const filtered = c_user.filter(({id}, index) => !ids.includes(id, index + 1))
+        
+        console.log("filtered users:    ",filtered);
+        
+        c_user = filtered
         socket.emit("onlineUsers", {
             c_user: c_user,
 
@@ -158,14 +164,20 @@ io.on("connection", (socket) => {
     });
 
     socket.on("getMessages",() => {
-        const msg = get_All_Messages()
+ 
+            // var msg;
+             
+       get_All_Messages().then(function(msg){
+        console.log(";;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;; ");
         console.log("inside get all message socket  :  ",msg);
-        
+    
         socket.emit("displayMsg",{
             msg: msg
         })
     })
 
+    })
+    
     //when the user exits the room
     socket.on("disconnect", () => {
         //the user is deleted from array of users and a left room message displayed

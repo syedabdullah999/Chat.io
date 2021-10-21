@@ -15,12 +15,13 @@ import 'antd/dist/antd.css';
 import '../index.css';
 import { List, Avatar } from 'antd';
 import Headers from "./Headers";
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu, Breadcrumb,Image } from 'antd';
 import Chat from "./Chat";
 import Loader from "./Loader";
 import BackGround from "./Background";
 import UsersList from "./UsersList";
 toast.configure()
+
 
 
 function Home({ socket }) {
@@ -62,9 +63,9 @@ function Home({ socket }) {
     <div className="Home">
     
       <Headers socket={socket} />
-      
+      {/* <Image className="images" src="https://cdn.wpspeedmatters.com/wp-content/uploads/2019/12/chat-bubbles.jpg" /> */}
       <UsersList socket={socket} />
-      <Footer className="footer" style={{ textAlign: 'center end' }}>Chat.io ©2021 Created by Syed Abdullah</Footer>
+      <Footer className="footer" style={{ backgroundColor:'#B0B0B0', textAlign: 'center end' }}>Chat.io ©2021 Created by Syed Abdullah</Footer>
       {/* <BackGround /> */}
     </div>
     

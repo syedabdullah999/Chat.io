@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 const schema3 = new Schema({
     // userEmail: { type: String, unique: true, required: true },
-    roomName: { type: String, unique: true, required: true },
-    message: { 
-        username: {type: String } , 
-        text: {type: String} 
-    },
+    roomName: { type: String },
+    message: [{
+        username: { type: String },
+        message: { type: String }
+    }],
 
 });
 

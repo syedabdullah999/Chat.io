@@ -19,6 +19,42 @@ function GroupChat({ username, groupname, socket }) {
     const [uName, setUname] = useState()
     let type = false;
 
+
+    const [divMove, setDivMove] = useState()
+
+  useEffect(() => {
+
+
+    setDivMove(document.getElementById('move'))
+    let a = setInterval(() => {
+      console.log("Move ==> ", divMove)
+      clearInterval(a)
+    }, 1000)
+    // let m1 = "move"
+
+  }, []);
+
+  useEffect(() => {
+    if (divMove !== undefined) {
+      console.log("DIV ===> ", divMove);
+      divMove.addEventListener('mousedown', (event) => {
+        window.addEventListener('mousemove', move, true);
+      });
+      window.addEventListener('mouseup', (event) => {
+        window.removeEventListener('mousemove', move, true);
+      });
+    }
+  }, [divMove])
+  const move = (e) => {
+    // let divM = divMove;
+    let div = document.getElementById('move')
+    div.style.top = e.clientY + 'px';
+    div.style.left = e.clientX + 'px';
+    // setDivMove(divM)
+  };
+
+
+
     const dispatch = useDispatch();
 
     const dispatchProcess = (encrypt, msg, cipher) => {
@@ -86,7 +122,7 @@ function GroupChat({ username, groupname, socket }) {
     return (
         <>
             <Home socket={socket} />
-            <div className="chatBoxLeft">
+            <div className="chatBoxLeft"  id="move">
                 <div className="chat">
                     <h1>{groupname}</h1>
                     <div className="user-name">

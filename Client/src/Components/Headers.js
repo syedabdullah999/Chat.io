@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import '../index.css';
-import { PageHeader, Button, Descriptions } from 'antd';
+import { PageHeader, Button, Descriptions, Menu, Dropdown } from 'antd';
 import { useSelector, useDispatch, connect } from 'react-redux';
 import { Header } from 'antd/lib/layout/layout';
 // import { socket } from 'socket.io-client';
@@ -14,6 +14,7 @@ import { loginAction } from '../actions'
 import Login from './Login';
 import ChatComponent from './ChatComponenet';
 import CreateGroup from './CreateGroup';
+import { PoweroffOutlined } from '@ant-design/icons';
 import Home from './Home';
 
 // import SocketCon from './SocketCon';
@@ -46,6 +47,7 @@ function Headers({ socket }) {
   const [socketCon, setsocketCon] = useState()
   const [signout, setSignout] = useState(false)
   const [group, setGroup] = useState(false)
+  const [create, setCreate] = useState(true)
   const [refresh, setRefresh] = useState(false)
   // console.log("store item", name);
   // console.log("inside Header");
@@ -148,7 +150,17 @@ function Headers({ socket }) {
   }
 
   const Group = () => {
+    setCreate(false)
     setGroup(true)
+    
+  }
+
+  function handleMenuClick(e) {
+    console.log('click', e);
+  }
+  const menu = () =>{
+    localStorage.clear();
+    history.push("/")
   }
 
   if (group) {
@@ -171,9 +183,23 @@ function Headers({ socket }) {
         title={<strong><a onClick={Reset}> {name} </a></strong>}
         subTitle="Welcome To Chat.io"
         extra={[<Link to={`/chat/${roomname}/${username}`} >
-          <Button key="1" type="primary" onClick={GlobalChat}>Global Chat</Button>
+          <Button key="1" type="primary" onClick={GlobalChat} style={{ background: "DarkSlateGrey", borderColor: "black"  }}>Global Chat</Button>
         </Link>,
-        <Button key="2" type="dashed" onClick={Group}> Create Group </Button>]}
+          <Button  key="1" type="primary"  onClick={Group} style={{ background: "DarkSlateGrey", borderColor: "black"  }}> Create Group </Button>,
+          // <Button  key="1" type="danger" onClick={menu}>Logout</Button>,
+          <Button
+          type="primary"
+          icon={<PoweroffOutlined />}
+          // loading={loadings[2]}
+          onClick={menu}
+          style={{ background: "DarkSlateGrey", borderColor: "black"  }}
+          
+        />
+          
+        // <div className="space"></div>
+          // <Dropdown.Button overlay={menu} >Actions</Dropdown.Button>
+        ]}
+          
       />
       </div>
     </>

@@ -94,7 +94,8 @@ function CreateGroup(props) {
     return (
         <>
         <Headers />
-       <Modal show={show} onHide={handleClose}>
+        {/* <div className="createGroup"> */}
+       <Modal  show={show} onHide={handleClose} className="createGroup">
         <Modal.Header closeButton>
           <Modal.Title>Create Group </Modal.Title>
         </Modal.Header>
@@ -143,6 +144,7 @@ function CreateGroup(props) {
           </Button>
         </Modal.Footer>
       </Modal>
+      {/* </div> */}
       </>
     );
   }
