@@ -17,6 +17,7 @@ import { List, Avatar } from 'antd';
 import Headers from "./Headers";
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
+import Home from "./Home";
 
 
 
@@ -150,9 +151,9 @@ function UsersList({ socket }) {
 
     return (
         <>
+                
             <div className="userList">
                 <h1> User List </h1>
-                
                 <List className="userHover"
                     itemLayout="horizontal"
                     dataSource={users}

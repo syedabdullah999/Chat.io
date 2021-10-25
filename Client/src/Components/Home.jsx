@@ -35,6 +35,15 @@ function Home({ socket }) {
   // const [username, setUserName] = useState()
 
 
+
+
+  useEffect(() => {
+    var user = JSON.parse(localStorage.getItem('user'));
+    if(user == null){
+      history.push(`/`)
+    }
+    
+  }, []);
 // let roomname = "Global"
 //  history.push(<Chat />)
   // console.log("A");
@@ -65,8 +74,10 @@ function Home({ socket }) {
       <Headers socket={socket} />
       {/* <Image className="images" src="https://cdn.wpspeedmatters.com/wp-content/uploads/2019/12/chat-bubbles.jpg" /> */}
       <UsersList socket={socket} />
+      {/* <div className="footer"> */}
       <Footer className="footer" style={{ backgroundColor:'#B0B0B0', textAlign: 'center end' }}>Chat.io ©2021 Created by Syed Abdullah</Footer>
       {/* <BackGround /> */}
+      {/* </div> */}
     </div>
     
     </>

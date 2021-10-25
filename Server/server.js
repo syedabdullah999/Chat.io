@@ -11,6 +11,7 @@ const color = require("colors");
 const { get_Current_User, user_Disconnect, join_User, get_All_User } = require("./public/model/globalUsers");
 const { get_Current_Group_User, join_Group_User } = require("./public/model/groupChatUsers");
 const { get_All_Messages, save_Message} = require("./public/model/messages")
+const { get_All_Group_Messages , save_Group_Message} = require("./public/model/groupMessages")
 // const {  }
 const { on } = require('nodemon');
 let userId = ""
@@ -136,7 +137,7 @@ io.on("connection", (socket) => {
         let userName = data[0].username
         let id = data[0].sendid
         // let msgSave = save-Messages(data);
-        console.log(message, userName, id);
+        console.log("abou to send message   :  ",message, userName, id);
         // socket.join(id)
         socket.broadcast.to(id).emit("sendMsg", {
             message, userName, id
@@ -170,11 +171,23 @@ io.on("connection", (socket) => {
        get_All_Messages().then(function(msg){
         console.log(";;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;; ");
         console.log("inside get all message socket  :  ",msg);
-    
         socket.emit("displayMsg",{
             msg: msg
         })
     })
+
+    })
+
+    socket.on("getGroupMessages", () => {
+        
+        get_All_Group_Messages().then(function(msg){
+            console.log(" inside get all group messages socket :",msg);
+
+        socket.emit("displayGroupMessage",{
+            msg: msg
+        })   
+        })
+
 
     })
     
@@ -213,10 +226,12 @@ io.on("connection", (socket) => {
 
 
     });
-    socket.on("groupChatMessage", (text) => {
-        console.log("inside chat socket", text);
+    socket.on("groupChatMessage", (text,groupname) => {
+        console.log("inside chat socket", text,groupname);
         //gets the room user and the message sent
         const p_user = get_Current_Group_User(socket.id);
+        const msg = save_Group_Message(p_user.username,groupname, text)
+
         console.log("socket.id = ", socket.id)
         console.log("p_users = ", p_user);
 

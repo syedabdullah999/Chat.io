@@ -10,6 +10,7 @@ import OneChat from './OneChat'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import GroupChat from './GroupChat';
 import { useDispatch, useSelector } from "react-redux";
+import '../index.css';
 
 require('dotenv').config()
 
@@ -52,7 +53,7 @@ function OneToOneChat(props) {
 }
 
 function GroupsChat(props) {
-    console.log("inside group chat");
+    console.log("inside group chat ##########################################");
     const name = useSelector(state => state.SignIn.token.name)
     let roomname = props.match.params.groupname
     let username = name
@@ -76,6 +77,7 @@ function GroupsChat(props) {
 function App() {
     return (
         <>
+        {/* <div className="Bimg"> */}
             <main>
                 <Switch>
                     {/* <Route path="/" component={Login(socket)} exact /> */}
@@ -93,6 +95,7 @@ function App() {
                     <Route component={Error} />
                 </Switch>
             </main>
+            {/* </div> */}
         </>
     )
 }

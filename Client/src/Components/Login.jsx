@@ -138,7 +138,8 @@ const Login = ({ props, socket }) => {
         console.log(login);
         // setHome(false)
 
-        toast.success('Successfull Login')
+        toast.success('Successfull Login', {
+          position: toast.POSITION.BOTTOM_RIGHT})
 
 
       }).catch((e) => {

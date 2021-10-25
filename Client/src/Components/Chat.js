@@ -8,6 +8,7 @@ import UsersList from "./UsersList";
 import { Footer } from "antd/lib/layout/layout";
 import Home from "./Home";
 import { MessagesAction } from "../actions/message";
+import Loader from "./Loader";
 
 
 function Chat({ username, roomname, socket }) {
@@ -25,6 +26,8 @@ function Chat({ username, roomname, socket }) {
   const [uName, setUname] = useState()
   let type = false;
   const [divMove, setDivMove] = useState()
+  const [load, setLoad] = useState(true)
+  const [chatbox, setChatBox] = useState(false)
 
   useEffect(() => {
 
@@ -40,6 +43,7 @@ function Chat({ username, roomname, socket }) {
 
   useEffect(() => {
     if (divMove !== undefined) {
+      if(chatbox){
       console.log("DIV ===> ", divMove);
       divMove.addEventListener('mousedown', (event) => {
         window.addEventListener('mousemove', move, true);
@@ -47,7 +51,7 @@ function Chat({ username, roomname, socket }) {
       window.addEventListener('mouseup', (event) => {
         window.removeEventListener('mousemove', move, true);
       });
-    }
+    }}
   }, [divMove])
   const move = (e) => {
     // let divM = divMove;
@@ -67,6 +71,7 @@ function Chat({ username, roomname, socket }) {
     socket.emit("getMessages")
 
     socket.on("displayMsg", (data) => {
+      setLoad(true)
       console.log("message history   :   ", data);
       let d = data.msg
       let len = Object.keys(d).length
@@ -80,7 +85,8 @@ function Chat({ username, roomname, socket }) {
           text: ans,
         });
         // dispatch(MessagesAction({ name: data.username, text: ans}));
-
+        setLoad(false)
+        setChatBox(true)
         setMessages([...temp]);
 
         // console.log("++++++++++++++++", d[i].username);
@@ -145,7 +151,9 @@ function Chat({ username, roomname, socket }) {
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    if(chatbox){
+    messagesEndRef.current.scrollIntoView({ block:"end" });
+  }
   };
 
   useEffect(scrollToBottom, [messages]);
@@ -154,7 +162,13 @@ function Chat({ username, roomname, socket }) {
 
   return (
     <>
+    
+      <Loader  load={load}/>
+    
+      
+      
       <Home socket={socket} />
+      {chatbox == true && 
       <div id="move2">
         <div className="chatBoxLeft" id="move" >
           <div className="chat"  >
@@ -225,6 +239,7 @@ function Chat({ username, roomname, socket }) {
           {/* <button onClick={onlineUsers}>Send</button> */}
         </div>
       </div>
+      }
     </>
   );
 }

@@ -167,6 +167,7 @@ function Headers({ socket }) {
     return (
       <CreateGroup
         show={group}
+        socket={socket}
       // onHide={() => setModalShow(false)}
       />
     )

@@ -29,6 +29,7 @@ function OneChat({ id, username, socket }) {
   console.log("hello", id, socket.id);
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
+  const [sendMessages, setSendMessages] = useState([]);
   const [displayMsg, setDisplayMsg] = useState([]);
   const [user, setUser] = useState(false)
   const [myUser, setMyUser] = useState("")
@@ -117,6 +118,7 @@ function OneChat({ id, username, socket }) {
         //   username: data.username,
         //   text: ans
         // })
+        
         setMessages([...temp])
         // setDisplayMsg([...data])
         // console.log("msgss      :     ",displayMsg);
@@ -170,15 +172,17 @@ function OneChat({ id, username, socket }) {
   const sendData = () => {
     if (text !== "") {
 
-      let temp = messages
+      let temp = sendMessages
       temp.push({
-        userId: id,
-        username: username,
+        userId: socket.id,
+        username: currentName,
         text: text,
       });
+      setSendMessages([...temp])
 
       setMessages([...temp])
-
+      console.log("initial set setmessages   :   " ,messages);
+      console.log("initial set setmessages  2  :   " ,sendMessages);
       //encrypt here
 
       const ans = to_Encrypt(text);
@@ -236,14 +240,14 @@ function OneChat({ id, username, socket }) {
                 return (
                   <div className="message">
                     <p>{i.text}</p>
-                    <span>{name}</span>
+                    <span>{currentName}</span>
                   </div>
                 );
               } else {
                 return (
                   <div className="message mess-right">
                     <p>{i.text} </p>
-                    <span>{currentName}</span>
+                    <span>{name}</span>
                   </div>
                 );
               }
