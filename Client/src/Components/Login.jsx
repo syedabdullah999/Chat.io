@@ -64,7 +64,10 @@ const Login = ({ props, socket }) => {
         alert("username and roomname are must !");
         // window.location.reload();
       }
-      history.push("/home")
+
+
+      
+        history.push("/home")
 
 
 

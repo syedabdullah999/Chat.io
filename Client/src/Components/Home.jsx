@@ -44,40 +44,14 @@ function Home({ socket }) {
     }
     
   }, []);
-// let roomname = "Global"
-//  history.push(<Chat />)
-  // console.log("A");
-  // // setRoomName("Global")
-  // // setUserName(name)
-  // let username = name;
-  // let roomname = "Global"
-  // console.log(roomname);
-  // console.log(username);
-  // if (username != "" && roomname !="") {
-  //   console.log("B");
-  //   // setsocketCon(socket)
-  //   socket.emit("joinRoom", { username, roomname });
-  //   console.log("c");
-  // } else {
-  //   alert("username and roomname are must !");
-  //   // window.location.reload();
-  // }
-
-  // console.log(roomname);
-
-
 
   return (
     <>
     <div className="Home">
     
       <Headers socket={socket} />
-      {/* <Image className="images" src="https://cdn.wpspeedmatters.com/wp-content/uploads/2019/12/chat-bubbles.jpg" /> */}
       <UsersList socket={socket} />
-      {/* <div className="footer"> */}
       <Footer className="footer" style={{ backgroundColor:'#B0B0B0', textAlign: 'center end' }}>Chat.io ©2021 Created by Syed Abdullah</Footer>
-      {/* <BackGround /> */}
-      {/* </div> */}
     </div>
     
     </>

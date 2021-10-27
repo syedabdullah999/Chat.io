@@ -77,6 +77,7 @@ function GroupsChat(props) {
 function App() {
     return (
         <>
+        {/* <Home socket={socket}/> */}
         {/* <div className="Bimg"> */}
             <main>
                 <Switch>

@@ -9,7 +9,8 @@ import { Footer } from "antd/lib/layout/layout";
 import Home from "./Home";
 import { MessagesAction } from "../actions/message";
 import Loader from "./Loader";
-
+import { useParams, useLocation, useHistory, useRouteMatch } from 'react-router-dom';
+import { Modal } from 'react-bootstrap'
 
 function Chat({ username, roomname, socket }) {
   console.log("hello", username, roomname, socket.id);
@@ -18,7 +19,7 @@ function Chat({ username, roomname, socket }) {
 
 
   const name = useSelector(state => state.SignIn.token.name)
-
+  const history = useHistory();
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
   const [typing, setTyping] = useState(false)
@@ -28,6 +29,15 @@ function Chat({ username, roomname, socket }) {
   const [divMove, setDivMove] = useState()
   const [load, setLoad] = useState(true)
   const [chatbox, setChatBox] = useState(false)
+
+  const [reCheck, setRecheck] = useState(false)
+  const [show, setShow] = useState(true);
+  const handleClose = () => {
+      
+      history.push(`/home`)
+      setShow(false)
+  };
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
 
@@ -169,6 +179,7 @@ function Chat({ username, roomname, socket }) {
       
       <Home socket={socket} />
       {chatbox == true && 
+      <Modal show={show} onHide={handleClose} className="createGroup">
       <div id="move2">
         <div className="chatBoxLeft" id="move" >
           <div className="chat"  >
@@ -180,7 +191,7 @@ function Chat({ username, roomname, socket }) {
             </div>
             <div className="chat-message">
               {messages.map((i) => {
-                if (i.username === username) {
+                if (i.username !== username) {
                   return (
                     <div className="message">
                       <p>{i.text}</p>
@@ -239,6 +250,7 @@ function Chat({ username, roomname, socket }) {
           {/* <button onClick={onlineUsers}>Send</button> */}
         </div>
       </div>
+      </Modal>
       }
     </>
   );

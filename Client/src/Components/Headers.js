@@ -16,6 +16,7 @@ import ChatComponent from './ChatComponenet';
 import CreateGroup from './CreateGroup';
 import { PoweroffOutlined } from '@ant-design/icons';
 import Home from './Home';
+import Loader from './Loader';
 
 // import SocketCon from './SocketCon';
 // import { Socket } from 'socket.io-client';
@@ -50,6 +51,8 @@ function Headers({ socket }) {
   const [create, setCreate] = useState(true)
   const [refresh, setRefresh] = useState(false)
   // console.log("store item", name);
+  const [load, setLoader] = useState(false)
+  const [showHome, setHome] = useState(false)
   // console.log("inside Header");
 
   const logout = () => {
@@ -160,8 +163,25 @@ function Headers({ socket }) {
   }
   const menu = () =>{
     localStorage.clear();
+    setLoader(true)
+    setGroup(false)
     history.push("/")
   }
+
+  // if(load){
+  //   return(
+  //   <Loader
+  //       {...setTimeout(() => {
+  //         setLoader(false)
+          
+  //         history.push(`/`)
+
+  //       }, 1000)}
+  //       />
+
+  //       )
+  //     }
+  
 
   if (group) {
     return (
@@ -183,6 +203,7 @@ function Headers({ socket }) {
         onBack={logout}
         title={<strong><a onClick={Reset}> {name} </a></strong>}
         subTitle="Welcome To Chat.io"
+        // PageHeader="sss"
         extra={[<Link to={`/chat/${roomname}/${username}`} >
           <Button key="1" type="primary" onClick={GlobalChat} style={{ background: "DarkSlateGrey", borderColor: "black"  }}>Global Chat</Button>
         </Link>,

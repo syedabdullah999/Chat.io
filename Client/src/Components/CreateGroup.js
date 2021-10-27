@@ -28,7 +28,7 @@ function CreateGroup({socket}) {
   const name = useSelector(state => state.SignIn.token.name)
   const history = useHistory();
   const [show, setShow] = useState(true);
-  const handleClose = () => setShow(false);
+  const handleClose = () => {setShow(false)};
   const handleShow = () => setShow(true);
   const token = useSelector(state => state.SignIn.token.token)
   const [users, setUsers] = useState([{}])
@@ -36,6 +36,7 @@ function CreateGroup({socket}) {
   const [groupName, setGroupName] = useState("")
   const [userUpdate, setUserUpdate] = useState(false)
   const [value, setValue] = useState();
+  const [check, setCheck] = useState(false);
 
 
 
@@ -105,6 +106,7 @@ function CreateGroup({socket}) {
       <Home socket={socket}/>
     )
   }
+
   return (
     <>
       <Headers />
@@ -133,12 +135,16 @@ function CreateGroup({socket}) {
                     // let temp = ""
                     // temp += ","+item.title
                     // if(members)
+                    // if(item.title.indexOf("✅") !=0){
+                    //   setMembers
+                    // }
                     setMembers(members.concat(item.title).concat(","))
                     item.title = null
+                    
                     console.log(members);
                   }}
 
-                  >{item.title}</a>}
+                  >{item.title} </a>}
 
 
                 />

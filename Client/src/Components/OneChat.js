@@ -12,7 +12,9 @@ import Home from "./Home";
 import { toast } from 'react-toastify';
 import { chatName } from "../reducers/chatName";
 import { useParams, useLocation, useHistory, useRouteMatch } from 'react-router-dom';
+import { Modal } from 'react-bootstrap'
 import Chat from "./Chat";
+import Loader from "./Loader"
 toast.configure()
 
 
@@ -26,6 +28,7 @@ function OneChat({ id, username, socket }) {
   //   text: "",
   // }
   // // setText2 = true
+  const history = useHistory();
   console.log("hello", id, socket.id);
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
@@ -33,41 +36,50 @@ function OneChat({ id, username, socket }) {
   const [displayMsg, setDisplayMsg] = useState([]);
   const [user, setUser] = useState(false)
   const [myUser, setMyUser] = useState("")
+  const [load, setLoad] = useState(true)
+  const [chatbox, setChatBox] = useState(false)
+  const [reCheck, setRecheck] = useState(false)
+  const [show, setShow] = useState(true);
+  const handleClose = () => {
+    history.push(`/home`)
+    setShow(false)
+  };
+  const handleShow = () => setShow(true);
   // const initialState = []
 
 
-  const [divMove, setDivMove] = useState()
+  // const [divMove, setDivMove] = useState()
 
-  useEffect(() => {
+  // useEffect(() => {
 
 
-    setDivMove(document.getElementById('move'))
-    let a = setInterval(() => {
-      console.log("Move ==> ", divMove)
-      clearInterval(a)
-    }, 1000)
-    // let m1 = "move"
+  //   setDivMove(document.getElementById('move'))
+  //   let a = setInterval(() => {
+  //     console.log("Move ==> ", divMove)
+  //     clearInterval(a)
+  //   }, 1000)
+  //   // let m1 = "move"
 
-  }, []);
+  // }, []);
 
-  useEffect(() => {
-    if (divMove !== undefined) {
-      console.log("DIV ===> ", divMove);
-      divMove.addEventListener('mousedown', (event) => {
-        window.addEventListener('mousemove', move, true);
-      });
-      window.addEventListener('mouseup', (event) => {
-        window.removeEventListener('mousemove', move, true);
-      });
-    }
-  }, [divMove])
-  const move = (e) => {
-    // let divM = divMove;
-    let div = document.getElementById('move')
-    div.style.top = e.clientY + 'px';
-    div.style.left = e.clientX + 'px';
-    // setDivMove(divM)
-  };
+  // useEffect(() => {
+  //   if (divMove !== undefined) {
+  //     console.log("DIV ===> ", divMove);
+  //     divMove.addEventListener('mousedown', (event) => {
+  //       window.addEventListener('mousemove', move, true);
+  //     });
+  //     window.addEventListener('mouseup', (event) => {
+  //       window.removeEventListener('mousemove', move, true);
+  //     });
+  //   }
+  // }, [divMove])
+  // const move = (e) => {
+  //   // let divM = divMove;
+  //   let div = document.getElementById('move')
+  //   div.style.top = e.clientY + 'px';
+  //   div.style.left = e.clientX + 'px';
+  //   // setDivMove(divM)
+  // };
 
 
 
@@ -91,6 +103,8 @@ function OneChat({ id, username, socket }) {
 
     console.log("inside id checker condition");
     socket.on("sendMsg", (res) => {
+      // toast.success('Message From ', {
+      //   position: toast.POSITION.BOTTOM_RIGHT})
 
       // history.push(`/oneChat/${res.id}/${res.userName}`)
       console.log("send message response  :   ", res);
@@ -100,33 +114,33 @@ function OneChat({ id, username, socket }) {
       // if (res.id == socket.id) {
 
 
-        // if(uName == username){
-        const ans = to_Decrypt(res.message, res.userName);
-        console.log("inside message socket", ans);
-        dispatchProcess(false, ans, res.message);
-        console.log("inside message socket", ans);
-        let temp = messages;
-        temp.push({
-          userId: res.id,
-          username: res.userName,
-          text: ans,
-        });
-        
-        // let data = displayMsg
-        // data.push({
-        //   userId: id,
-        //   username: data.username,
-        //   text: ans
-        // })
-        
-        setMessages([...temp])
-        // setDisplayMsg([...data])
-        // console.log("msgss      :     ",displayMsg);
-        // setMessages([...messages],[...displayMsg]);
-        // // setMessages([...data])
+      // if(uName == username){
+      const ans = to_Decrypt(res.message, res.userName);
+      console.log("inside message socket", ans);
+      dispatchProcess(false, ans, res.message);
+      console.log("inside message socket", ans);
+      let temp = messages;
+      temp.push({
+        userId: res.id,
+        username: res.userName,
+        text: ans,
+      });
 
-        console.log("messagesssssss    :    ", messages);
-        // toast.success("NEW MESSAGE FROM ", name)
+      // let data = displayMsg
+      // data.push({
+      //   userId: id,
+      //   username: data.username,
+      //   text: ans
+      // })
+
+      setMessages([...temp])
+      // setDisplayMsg([...data])
+      // console.log("msgss      :     ",displayMsg);
+      // setMessages([...messages],[...displayMsg]);
+      // // setMessages([...data])
+
+      console.log("messagesssssss    :    ", messages);
+      // toast.success("NEW MESSAGE FROM ", name)
       // }
     });
 
@@ -143,54 +157,68 @@ function OneChat({ id, username, socket }) {
 
 
   }, []);
-  // useEffect(() => {
-  //                 },[]);
+
+  
 
 
+  useEffect(() => {
+    socket.emit("getOneChatMessages", username,currentName);
+    socket.on("displayOneChatMessage", (data) => {
 
-  //   console.log("inside useeffect", socket , username,roomname);
-  //     socket.on("message", (data) => {
-  //       //decypt
-  //       console.log("message response from socket :", data);
-  //       const ans = to_Decrypt(data.text, data.username);
-  //       console.log("inside message socket",data);
-  //       dispatchProcess(false, ans, data.text);
-  //       console.log("inside message socket",ans);
-  //       let temp = messages;
-  //       temp.push({
-  //         userId: data.userId,
-  //         username: data.username,
-  //         text: ans,
-  //       });
-  //       setMessages([...temp]);
-  //     });
-  //     socket.on("onlineUsers", (c_user) => {
-  //         console.log("List Of All Online Users  : ",c_user);
-  //     })
-  //   }, []);
+      setLoad(true)
+
+      if(data.msg != undefined){
+        let d = data.msg
+        let len = Object.keys(d).length
+        console.log("message history   :   ", data);
+
+        for (let i = 0; i < len; i++) {
+          const ans = to_Decrypt(d[i].message, d[i].username);
+          let temp = messages;
+          temp.push({
+            userId: socket.id,
+            username: d[i].username,
+            text: ans,
+          });
+          setMessages([...temp]);
+
+          // dispatch(MessagesAction({ name: data.username, text: ans}));
+
+          // console.log("++++++++++++++++", d[i].username);
+        }
+      }
+    })
+    setLoad(false)
+    setChatBox(true)
+
+
+  }, []);
+
 
   const sendData = () => {
     if (text !== "") {
 
-      let temp = sendMessages
-      temp.push({
-        userId: socket.id,
-        username: currentName,
-        text: text,
-      });
-      setSendMessages([...temp])
+      // let temp = sendMessages
+      // temp.push({
+      //   userId: socket.id,
+      //   username: currentName,
+      //   text: text,
+      // });
+      // setSendMessages([...temp])
 
-      setMessages([...temp])
-      console.log("initial set setmessages   :   " ,messages);
-      console.log("initial set setmessages  2  :   " ,sendMessages);
+      // setMessages([...temp])
+      // console.log("initial set setmessages   :   ", messages);
+      // console.log("initial set setmessages  2  :   ", sendMessages);
       //encrypt here
 
       const ans = to_Encrypt(text);
       let data = []
       data.push({
         sendid: id,
+        currentName:currentName,
         username: username,
-        message: ans
+        message: ans,
+        currentId: socket.id
       })
       // setDisplayMsg([...data])
       socket.emit("getMsg", data)
@@ -209,6 +237,14 @@ function OneChat({ id, username, socket }) {
   //   }
   const messagesEndRef = useRef(null);
 
+    const scrollToBottom = () => {
+        if (chatbox) {
+            messagesEndRef.current.scrollIntoView({ block: "end" });
+        }
+    };
+
+    useEffect(scrollToBottom, [messages]);
+
   //   const scrollToBottom = () => {
   //     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   //   };
@@ -219,57 +255,62 @@ function OneChat({ id, username, socket }) {
 
   return (
     <>
+      <Loader load={load} />
       <Home socket={socket} />
       {/* <Chat
         username={currentName}
         roomname={"Global"}
         socket={socket}
       /> */}
-      <div className="chatBoxLeft" id="move">
-        <div className="chat">
-          <h1>One To One Chat </h1>
-          <div className="user-name">
-            <h2>
-              {currentName}
-              {/* <span style={{ fontSize: "0.7rem" }}>in {roomname}</span> */}
-            </h2>
-          </div>
-          <div className="chat-message">
-            {messages.map((i) => {
-              if (i.username === username) {
-                return (
-                  <div className="message">
-                    <p>{i.text}</p>
-                    <span>{currentName}</span>
-                  </div>
-                );
-              } else {
-                return (
-                  <div className="message mess-right">
-                    <p>{i.text} </p>
-                    <span>{name}</span>
-                  </div>
-                );
-              }
-            })}
-            <div ref={messagesEndRef} />
-          </div>
-          <div className="send">
-            <input
-              placeholder="enter your message"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  sendData();
+      {chatbox == true &&
+      <Modal show={show} onHide={handleClose} className="createGroup">
+        <div className="chatBoxLeft" id="move">
+          <div className="chat">
+            <h1>One To One Chat </h1>
+            <div className="user-name">
+              <h2>
+                {currentName}
+                {/* <span style={{ fontSize: "0.7rem" }}>in {roomname}</span> */}
+              </h2>
+            </div>
+            <div className="chat-message">
+              {messages.map((i) => {
+                if (i.username === username) {
+                  return (
+                    <div className="message">
+                      <p>{i.text}</p>
+                      <span>{currentName}</span>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div className="message mess-right">
+                      <p>{i.text} </p>
+                      <span>{name}</span>
+                    </div>
+                  );
                 }
-              }}
-            ></input>
-            <button onClick={sendData}>Send</button>
+              })}
+              <div ref={messagesEndRef} />
+            </div>
+            <div className="send">
+              <input
+                placeholder="enter your message"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    sendData();
+                  }
+                }}
+              ></input>
+              <button onClick={sendData}>Send</button>
+            </div>
           </div>
+          {/* <button onClick={onlineUsers}>Send</button> */}
         </div>
-        {/* <button onClick={onlineUsers}>Send</button> */}
-      </div>
+        </Modal>
+      }
     </>
   );
 }

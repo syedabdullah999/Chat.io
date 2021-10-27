@@ -7,5 +7,6 @@ mongoose.Promise = global.Promise;
 module.exports = {
     User: require('../public/model/model'),
     Groups: require('../public/model/groupModel'),
-    History: require('../public/model/globalChatHistory') 
+    History: require('../public/model/globalChatHistory') ,
+    OneToOneChat : require('../public/model/OneChatHistoryModel')
 };

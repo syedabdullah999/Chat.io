@@ -84,8 +84,12 @@ function UsersList({ socket }) {
                     c_user.c_user.map((user) => online.push({ title: user.username, id: user.id }))
                     console.log("List Of All Online Users  : ", online);
                     let online2 = online.filter((i) => i.title != name)
-                    console.log(online2);
-                    setOnlineUsers(online2)
+                    const nm = online2.map(o => o.title)
+                    const filtered = online2.filter(({ title }, index) => !nm.includes(title, index + 1))
+                    // const filtered = online2.filter(({id}, index) => !ids.includes(id, index + 1))
+                    console.log("List Of All Online Users  :   filtered  *********************    ",filtered);
+                    console.log("List Of All Online Users  :    *********************    ",online2);
+                    setOnlineUsers(filtered)
                 }
                 // history.push('/home')
             })
@@ -151,8 +155,32 @@ function UsersList({ socket }) {
 
     return (
         <>
-                
+
             <div className="userList">
+
+                <h1>Groups</h1>
+                <List className="userHover"
+                    itemLayout="horizontal"
+                    dataSource={userGroups}
+                    renderItem={(item, ind) => (
+                        <List.Item key={ind}>
+                            <List.Item.Meta
+                                avatar={<Avatar src="https://img.icons8.com/ios-filled/50/000000/group-foreground-selected.png" />}
+                                title={onclick = <Link to={`/groupChat/${item.title}`}>{item.title}</Link>}
+
+                            />
+                        </List.Item>
+
+                    )}
+                />
+
+
+
+
+
+
+                <div className="gap"></div>
+
                 <h1> User List </h1>
                 <List className="userHover"
                     itemLayout="horizontal"
@@ -164,25 +192,6 @@ function UsersList({ socket }) {
                                 title={<a onClick={chatBoxes}
 
                                 >{item.title}</a>}
-
-                            />
-                        </List.Item>
-
-                    )}
-                />
-               
-
-                <div className="gap"></div>
-                
-                <h1>Groups</h1>
-                <List className="userHover"
-                    itemLayout="horizontal"
-                    dataSource={userGroups}
-                    renderItem={(item, ind) => (
-                        <List.Item key={ind}>
-                            <List.Item.Meta
-                                avatar={<Avatar src="https://img.icons8.com/ios-filled/50/000000/group-foreground-selected.png" />}
-                                title={onclick = <Link to={`/groupChat/${item.title}`}>{item.title}</Link>}
 
                             />
                         </List.Item>

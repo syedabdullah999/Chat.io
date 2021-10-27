@@ -26,6 +26,7 @@ async function save_Group_Message(username,roomname , message) {
         const history = new History(obj);
 
         history.save()
+        console.log("after history save");
 
 
     }
@@ -56,16 +57,21 @@ async function save_Group_Message(username,roomname , message) {
 }
 
 
-async function get_All_Group_Messages() {
+async function get_All_Group_Messages(groupname) {
     // let result = msg
-
-    let response = await History.findOne({ roomName: "Global" })
+    console.log("inside get all group message from db :", groupname);
+    try{
+    let response = await History.findOne({ roomName: groupname })
     // let a =response.toString()
     console.log("..............  :  ", response.message);
 
     let result = response.message
     console.log("inside get all previous messages  :  ", result);
     return result
+}
+catch(e){
+    console.log("exeption" , e);
+}
 }
 
 module.exports = {
