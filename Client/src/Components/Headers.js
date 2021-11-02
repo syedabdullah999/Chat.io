@@ -204,7 +204,7 @@ function Headers({ socket }) {
         // {...<Button>sss</Button>}
         onBack={<a style={{color: "#b7acac"}} onClick={logout}></a>}
         title={<strong><a onClick={Reset} style={{color: "#b7acac"}}> {name} </a></strong>}
-        subTitle={<a style={{color: "#b7acac"}}><strong>Welcome To Chat.io</strong></a>}
+        subTitle={<a style={{color: "#b7acac" }}><strong>Welcome To Chat.io</strong></a>}
         // PageHeader="sss"
         extra={[<Link to={`/chat/${roomname}/${username}`} >
           <Button key="1" type="primary" onClick={GlobalChat} style={{ background: "#40275a", borderColor: "black", borderRadius: "20px" }}>Global Chat</Button>

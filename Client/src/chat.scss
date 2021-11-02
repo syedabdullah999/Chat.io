@@ -1,31 +1,31 @@
 // @import "./globals";
-// @mixin scrollbars(
-//   $size,
-//   $foreground-color,
-//   $background-color: mix($foreground-color, white, 50%)
-// ) {
-//   //style for Google Chrome
-//   &::-webkit-scrollbar {
-//     width: $size;
-//     height: $size;
-//   }
+@mixin scrollbars(
+  $size,
+  $foreground-color,
+  $background-color: mix($foreground-color, rgba(255, 255, 255, 0.568), 50%)
+) {
+  //style for Google Chrome
+  &::-webkit-scrollbar {
+    width: 9px;
+    height: $size;
+  }
 
-//   &::-webkit-scrollbar-thumb {
-//     background: $foreground-color;
-//     border-radius: 10px;
-//   }
+  &::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+    border-radius: 10px;
+  }
 
-//   &::-webkit-scrollbar-track {
-//     background: $background-color;
-//     border-radius: 10px;
-//   }
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+    border-radius: 10px;
+  }
 
-//   //style for Internet Explorer
-//   & {
-//     scrollbar-face-color: $foreground-color;
-//     scrollbar-track-color: $background-color;
-//   }
-// }
+  //style for Internet Explorer
+  & {
+    scrollbar-face-color: $foreground-color;
+    scrollbar-track-color: $background-color;
+  }
+}
 
 .chatBoxLeft{
   position: fixed;
@@ -64,8 +64,9 @@
   .chat-message {
     height: 70%;
     overflow-y: auto;
+
     
-    // @include scrollbars(5px, $backgroundColor, $yellowColor);
+    @include scrollbars(5px,#40275a,);
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -128,22 +129,25 @@
     height: 50px;
     display: flex;
     input {
-      width: 80%;
+      width: 81%;
       text-decoration: none;
       background-color: #fefeff;
       border: none;
       padding-left: 1rem;
-      border-radius: 5px 0px 0px 5px;
+      border-radius: 24px;
       &:focus {
         outline: none;
       }
     }
     button {
-      width: 20%;
+      width: 13%;
       border: none;
       background-color:#40275a;
       border-radius: 0px 5px 5px 0px;
       color: white;
+      margin-top: -2px;
+      border-radius: 30px;
+      margin-left: 72px;
       &:hover {
         cursor: pointer;
       }

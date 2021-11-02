@@ -257,6 +257,8 @@ io.on("connection", (socket) => {
         const p_user = get_Current_Group_User(socket.id);
         
         console.log("socket.id = ", socket.id)
+
+
         console.log("p_users = ", p_user);
 
         io.to(p_user.room).emit("groupMsg", {

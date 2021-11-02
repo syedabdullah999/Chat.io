@@ -159,10 +159,10 @@ function CreateGroup({socket}) {
 
         </Modal.Body>
         <Modal.Footer className="modal-color">
-          <Button variant="secondary" onClick={handleClose} style={{ color:"white", background: "DarkSlateGrey", borderColor: "black"  , borderRadius: "20px"}} >
+          <Button variant="secondary" onClick={handleClose} style={{ color:"white", background: "#40275a", borderColor: "black"  , borderRadius: "20px"}} >
             Close
           </Button>
-          <Button variant="primary" onClick={newGroup} style={{ color:"white", background: "DarkSlateGrey", borderColor: "black"  , borderRadius: "20px"}}>
+          <Button variant="primary" onClick={newGroup} style={{ color:"white", background: "#40275a", borderColor: "black"  , borderRadius: "20px"}}>
             Save Changes
           </Button>
         </Modal.Footer>
