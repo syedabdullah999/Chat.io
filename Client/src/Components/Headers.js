@@ -40,8 +40,9 @@ function Headers({ socket }) {
   // const [box, setBox] = useState(false)
   // console.log("store item", token);
 
-
-  const name = useSelector(state => state.SignIn.token.name)
+  var user = JSON.parse(localStorage.getItem('user'));
+  // const name = useSelector(state => state.SignIn.token.name)
+  const name = user.name
   const [roomname, setRoomName] = useState("Global")
   const [username, setUserName] = useState(name)
   const [socketOn, setsocketOn] = useState(true)
@@ -197,24 +198,25 @@ function Headers({ socket }) {
       {/* <SocketCon socket={socket} /> */}
       <div className="headerFix">
       <PageHeader
+      style={{color: "#b7acac"}}
         className="site-page-header"
         
         // {...<Button>sss</Button>}
-        onBack={logout}
-        title={<strong><a onClick={Reset}> {name} </a></strong>}
-        subTitle="Welcome To Chat.io"
+        onBack={<a style={{color: "#b7acac"}} onClick={logout}></a>}
+        title={<strong><a onClick={Reset} style={{color: "#b7acac"}}> {name} </a></strong>}
+        subTitle={<a style={{color: "#b7acac"}}><strong>Welcome To Chat.io</strong></a>}
         // PageHeader="sss"
         extra={[<Link to={`/chat/${roomname}/${username}`} >
-          <Button key="1" type="primary" onClick={GlobalChat} style={{ background: "DarkSlateGrey", borderColor: "black"  }}>Global Chat</Button>
+          <Button key="1" type="primary" onClick={GlobalChat} style={{ background: "#40275a", borderColor: "black", borderRadius: "20px" }}>Global Chat</Button>
         </Link>,
-          <Button  key="1" type="primary"  onClick={Group} style={{ background: "DarkSlateGrey", borderColor: "black"  }}> Create Group </Button>,
+          <Button  key="1" type="primary"  onClick={Group} style={{ background: "#40275a", borderColor: "black" , borderRadius: "20px" }}> Create Group </Button>,
           // <Button  key="1" type="danger" onClick={menu}>Logout</Button>,
           <Button
           type="primary"
           icon={<PoweroffOutlined />}
           // loading={loadings[2]}
           onClick={menu}
-          style={{ background: "DarkSlateGrey", borderColor: "black"  }}
+          style={{ background: "#40275a", borderColor: "black"  , borderRadius: "20px"}}
           
         />
           

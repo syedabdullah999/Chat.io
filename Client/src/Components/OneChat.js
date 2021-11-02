@@ -103,9 +103,10 @@ function OneChat({ id, username, socket }) {
 
     console.log("inside id checker condition");
     socket.on("sendMsg", (res) => {
-      // toast.success('Message From ', {
+      // if(socket.id !== res.currentId){
+      // toast.success('Message From ', res.userName ,{
       //   position: toast.POSITION.BOTTOM_RIGHT})
-
+      // }
       // history.push(`/oneChat/${res.id}/${res.userName}`)
       console.log("send message response  :   ", res);
       console.log("response from one to one chat : ", res.message, res.userName);
@@ -266,10 +267,10 @@ function OneChat({ id, username, socket }) {
       <Modal show={show} onHide={handleClose} className="createGroup">
         <div className="chatBoxLeft" id="move">
           <div className="chat">
-            <h1>One To One Chat </h1>
+            <h1 style={{color: "#b7acac"}}>One To One Chat </h1>
             <div className="user-name">
-              <h2>
-                {currentName}
+              <h2 style={{color: "#b7acac"}}>
+                {name}
                 {/* <span style={{ fontSize: "0.7rem" }}>in {roomname}</span> */}
               </h2>
             </div>
@@ -279,14 +280,14 @@ function OneChat({ id, username, socket }) {
                   return (
                     <div className="message">
                       <p>{i.text}</p>
-                      <span>{currentName}</span>
+                      <span style={{color: "#b7acac"}}>{currentName}</span>
                     </div>
                   );
                 } else {
                   return (
                     <div className="message mess-right">
                       <p>{i.text} </p>
-                      <span>{name}</span>
+                      <span style={{color: "#b7acac"}}>{name}</span>
                     </div>
                   );
                 }

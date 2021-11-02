@@ -3,7 +3,7 @@ var g_users = [];
 // joins the user to the specific chatroom
 function join_Group_User(id, username, room) {
   let n_user = { id, username, room };
-
+ 
   g_users.push(n_user);
   console.log(g_users, "users");
   console.log(n_user," : p_users");

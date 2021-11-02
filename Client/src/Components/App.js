@@ -8,9 +8,19 @@ import io from "socket.io-client";
 import Chat from './Chat';
 import OneChat from './OneChat'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { to_Decrypt, to_Encrypt } from "../aes.js";
 import GroupChat from './GroupChat';
 import { useDispatch, useSelector } from "react-redux";
 import '../index.css';
+// import background from "../chat-bubbles.png";
+import BackgroundImage from "./backgroundImage";
+import Image from 'react-bootstrap/Image';
+import { toast } from 'react-toastify';
+import chatBubbles from '../Dark5.jpg'
+import { Button, notification } from 'antd';
+
+import 'antd/dist/antd.css';
+// import { POSITION } from 'react-toastify/dist/utils';
 
 require('dotenv').config()
 
@@ -21,7 +31,7 @@ function Appmain(props) {
     console.log("in appmain");
     return (
         <>
-            <div className="right">
+            <div >
                 <Chat
                     username={props.match.params.username}
                     roomname={props.match.params.roomname}
@@ -38,7 +48,7 @@ function Appmain(props) {
 function OneToOneChat(props) {
     console.log("hellooo   :   ", props.match.params.id);
     console.log("helloo   :   ", props.match.params.title);
-    
+
     return (
         <>
             <OneChat
@@ -53,8 +63,8 @@ function OneToOneChat(props) {
 }
 
 function GroupsChat(props) {
-    console.log("inside group chat ##########################################");
     const name = useSelector(state => state.SignIn.token.name)
+    console.log("inside group chat ##########################################  !!!!!!!!!!!!!!!!!!! ", name, props.match.params.groupname);
     let roomname = props.match.params.groupname
     let username = name
     socket.emit("groupChat", { username, roomname });
@@ -74,11 +84,46 @@ function GroupsChat(props) {
 
 }
 
+toast.configure()
 function App() {
+    // const [notification, setNotification] = useState(false)
+    useEffect(() => {
+        socket.on("notification", (data) => {
+            
+            let n = data.user2
+            console.log("message recieved ((((((((((())))))))))))))", data);
+            const ans = to_Decrypt(data.message, data.userName);
+            const args = {
+                message: 'Message From '+n,
+                description:
+                ans,
+                duration: 4,
+            };
+            notification.config({
+                placement: 'bottomRight',
+                bottom: 50,
+                duration: 4,
+                // rtl: true,
+                
+              });
+            
+            notification.open(args);
+            // toast.success('Successfull Login',data.userName ,{
+            //     position: toast.POSITION.BOTTOM_CENTER})
+        })
+    }, []);
+
+    // if(notification){
+    //     return(
+    //         <>
+
+    //         </>
+    //     )
+    // }
     return (
         <>
-        {/* <Home socket={socket}/> */}
-        {/* <div className="Bimg"> */}
+
+            <Image src={chatBubbles} className="image-set2" />
             <main>
                 <Switch>
                     {/* <Route path="/" component={Login(socket)} exact /> */}
@@ -88,6 +133,7 @@ function App() {
                     </Route>
                     <Route path="/register" component={Register} />
                     <Route path="/home" >
+                        {/* <BackgroundImage /> */}
                         <Home socket={socket} />
                     </Route>
                     <Route path="/chat/:roomname/:username" component={Appmain} />
@@ -96,6 +142,7 @@ function App() {
                     <Route component={Error} />
                 </Switch>
             </main>
+
             {/* </div> */}
         </>
     )

@@ -18,7 +18,7 @@ import Loader from "./Loader";
 function GroupChat({ username, groupname, socket }) {
 
     const name = useSelector(state => state.SignIn.token.name)
-    console.log("inside group chat again    ");
+    console.log("inside group chat again    ", groupname , username);
     const history = useHistory();
     const [text, setText] = useState("");
     const [messages, setMessages] = useState([]);
@@ -45,53 +45,53 @@ function GroupChat({ username, groupname, socket }) {
     const dispatchProcess = (encrypt, msg, cipher) => {
         dispatch(process(encrypt, msg, cipher));
     };
-    useEffect(() => {
-        console.log("inside use effect");
-        // debugger
-        let grp2 = JSON.parse(localStorage.getItem('groupChange'));
-        if (group == null || group == undefined || group == "") {
-            console.log("inside group null check    ");
-            // localStorage.setItem('groupChange', JSON.stringify(groupname));
-            // localStorage.setItem('groupChangeCondition', JSON.stringify(true));
+    // useEffect(() => {
+    //     console.log("inside use effect");
+    //     // debugger
+    //     let grp2 = JSON.parse(localStorage.getItem('groupChange'));
+    //     if (group == null || group == undefined || group == "") {
+    //         console.log("inside group null check    ");
+    //         // localStorage.setItem('groupChange', JSON.stringify(groupname));
+    //         // localStorage.setItem('groupChangeCondition', JSON.stringify(true));
 
 
-            setGroup(groupname)
-        }
-        let grp = JSON.parse(localStorage.getItem('groupChange'));
-        console.log("group saved in usestate   :   ", group);
-        if (group !== groupname) {
-            console.log("setting fields to null  ");
-            setUname()
+    //         setGroup(groupname)
+    //     }
+    //     let grp = JSON.parse(localStorage.getItem('groupChange'));
+    //     console.log("group saved in usestate   :   ", group);
+    //     if (group !== groupname) {
+    //         console.log("setting fields to null  ");
+    //         setUname()
 
 
-            // let temp = []
-            // temp.push({
-            //     userId: null,
-            //     username: null,
-            //     text: null,
-            // });
-            // setMessages(u =>[...u, null])
-            // setMessages(messages.filter(item => item.username === null))
-            // setRecheck(true)
-            // messages = null
-            let messages2 = []
-            setMessages([])
-            console.log("B");
-            setRecheck(false)
-            setSR(true)
-            // setSR(true)
-            setText("")
-            // setTimeout(() => {
+    //         // let temp = []
+    //         // temp.push({
+    //         //     userId: null,
+    //         //     username: null,
+    //         //     text: null,
+    //         // });
+    //         // setMessages(u =>[...u, null])
+    //         // setMessages(messages.filter(item => item.username === null))
+    //         // setRecheck(true)
+    //         // messages = null
+    //         let messages2 = []
+    //         setMessages([])
+    //         console.log("B");
+    //         setRecheck(false)
+    //         setSR(true)
+    //         // setSR(true)
+    //         setText("")
+    //         // setTimeout(() => {
 
-            // }, 3000); 
-            console.log("reseting values to null    ", messages);
-            console.log("group name  =  ", groupname);
-            // let a = setInterval(() => {
-            //     clearInterval(a)
-            // }, 1000)
-        }
+    //         // }, 3000); 
+    //         console.log("reseting values to null    ", messages);
+    //         console.log("group name  =  ", groupname);
+    //         // let a = setInterval(() => {
+    //         //     clearInterval(a)
+    //         // }, 1000)
+    //     }
 
-    }, [groupname]);
+    // }, [groupname]);
 
     useEffect(() => {
         socket.emit("getGroupMessages", groupname);
@@ -147,7 +147,7 @@ function GroupChat({ username, groupname, socket }) {
         socket.on("groupMsg", (data) => {
             console.log("A");
             setGroup(data.room)
-            if (data.room === groupname) {
+            if (data.room == groupname) {
                 //decypt
                 // console.log("message response from socket :", data);
                 console.log("socket message data   :   ", data.text);
@@ -243,9 +243,9 @@ function GroupChat({ username, groupname, socket }) {
                     <div className="chatBoxLeft" id="move">
                         {/* <CloseButton onClick={closeTab} /> */}
                         <div className="chat">
-                            <h1>{groupname}</h1>
+                            <h1 style={{color: "#b7acac"}}>{groupname}</h1>
                             <div className="user-name">
-                                <h2>
+                                <h2 style={{color: "#b7acac"}}>
                                     {username} <span style={{ fontSize: "0.7rem" }}>in {groupname}</span>
                                 </h2>
                             </div>
@@ -255,14 +255,14 @@ function GroupChat({ username, groupname, socket }) {
                                         return (
                                             <div className="message" key={ind}>
                                                 <p>{i.text}</p>
-                                                <span>{i.username}</span>
+                                                <span style={{color: "#b7acac"}}>{i.username}</span>
                                             </div>
                                         );
                                     } else {
                                         return (
                                             <div className="message mess-right" key={ind}>
                                                 <p>{i.text} </p>
-                                                <span>{i.username}</span>
+                                                <span style={{color: "#b7acac"}}>{i.username}</span>
                                             </div>
                                         );
                                     }
@@ -270,7 +270,7 @@ function GroupChat({ username, groupname, socket }) {
                                 <div ref={messagesEndRef} />
                             </div>
 
-                            <span>{uName}{typingggg}</span>
+                            <span style={{color: "#b7acac"}}>{uName}{typingggg}</span>
 
                             <div className="send">
 

@@ -25,8 +25,8 @@ async function save_One_Chat_Message(user1, user2, message) {
 
     const oneToOneChat2 = await OneToOneChat.findOne({ users: user });
     const oneToOneChat3 = await OneToOneChat.findOne({ users: u2 });
-    console.log("responseeeee&&&&&&&&&&&&&&&&&& 2222  :", oneToOneChat2);
-    console.log("responseeeee&&&&&&&&&&&&&&&&&& 3333  :", oneToOneChat3);
+    // console.log("responseeeee&&&&&&&&&&&&&&&&&& 2222  :", oneToOneChat2);
+    // console.log("responseeeee&&&&&&&&&&&&&&&&&& 3333  :", oneToOneChat3);
     if (!oneToOneChat2 && !oneToOneChat3) {
         console.log("inside saving data to history db");
         let obj = {
@@ -73,8 +73,8 @@ async function save_One_Chat_Message(user1, user2, message) {
     }
 
     msg.push(user_msg);
-    console.log(msg, "  :  msg");
-    console.log(user_msg, " :  : user_msg");
+    // console.log(msg, "  :  msg");
+    // console.log(user_msg, " :  : user_msg");
 
     return user_msg;
 }
@@ -99,14 +99,14 @@ async function get_All_One_Chat_Messages(user1, user2) {
         console.log("..............  :  ", response.message);
 
         let result = response.message
-        console.log("inside get all previous messages  :  ", result);
+        // console.log("inside get all previous messages  :  ", result);
         return result
     }
     else{
         console.log("..............  :  ", response2.message);
 
         let result = response2.message
-        console.log("inside get all previous messages  :  ", result);
+        // console.log("inside get all previous messages  :  ", result);
         return result
     }
     }

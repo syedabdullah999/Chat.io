@@ -128,13 +128,17 @@ io.on("connection", (socket) => {
         let id = data[0].sendid
         let currentId = data[0].currentId
 
-        const msg = save_One_Chat_Message(userName, user2, message)
         // let msgSave = save-Messages(data);
         console.log("about to send message   :  ", message, userName, id);
+        io.to(id).emit("notification",{
+            userName,id,user2,message
+        })
         // socket.join(id)
         io.to(id).to(currentId).emit("sendMsg", {
             message, userName, id, currentId
         });
+        console.log("saving message  !!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!");
+        const msg = save_One_Chat_Message(userName, user2, message)
         // socket.broadcast.to(currentId).emit("sendMsg", {
         //     message, userName, id
         // }
@@ -142,30 +146,34 @@ io.on("connection", (socket) => {
     });
     /////////////////////////////////////////////////////////////////////////////
     ////////////////////////Global Room Send Message/////////////////////////////
-    socket.on("chat", (text) => {
+    var first = 1;
+    socket.on("chat", (text , id) => {
+        
+        console.log("in chat socket after message send ",first+1);
         console.log("inside chat socket", text);
         //gets the room user and the message sent
-        const p_user = get_Current_User(socket.id);
-        const msg = save_Message(p_user.username, text)
+        get_Current_User(id).then(function (result) {
 
-        console.log("saved message  :  ", msg);
+        let p_user = result
+        let room = "Global"
+        // console.log("saved message  :  ", msg);
         console.log("socket.id = ", socket.id);
         console.log("p_users = ", p_user);
-
-        io.to(p_user.room).emit("message", {
+        console.log("about to send data to global chat Messageeeee    &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& ");
+        io.to(room).emit("message", {
             userId: p_user.id,
             username: p_user.username,
             text: text,
         });
+        console.log("saving message  !!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!");
+        const msg = save_Message(p_user.username, text)
+    });
     });
 
 
     /////////////////////////////////////////////////////////////////////////////
     ////////////////////////Get All Global Messages From DB//////////////////////
     socket.on("getMessages", () => {
-
-        // var msg;
-
         get_All_Messages().then(function (msg) {
             console.log(";;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;; ");
             console.log("inside get all message socket  :  ", msg);
@@ -198,7 +206,7 @@ io.on("connection", (socket) => {
     socket.on("getOneChatMessages", (user1, user2) => {
         console.log("inside get group message socket   :   ");
         get_All_One_Chat_Messages(user1, user2).then(function (msg) {
-            console.log(" inside get one chat  messages socket %%%%%%%%%% :", msg);
+            // console.log(" inside get one chat  messages socket %%%%%%%%%% :", msg);
             socket.emit("displayOneChatMessage", {
                 msg: msg
             })
@@ -247,17 +255,18 @@ io.on("connection", (socket) => {
         console.log("inside chat socket", text, groupname);
         //gets the room user and the message sent
         const p_user = get_Current_Group_User(socket.id);
-        const msg = save_Group_Message(p_user.username, groupname, text)
-
+        
         console.log("socket.id = ", socket.id)
         console.log("p_users = ", p_user);
 
         io.to(p_user.room).emit("groupMsg", {
             userId: p_user.id,
             username: p_user.username,
-            room: p_user.room,
+            room: groupname,
             text: text,
         });
+        console.log("saving message  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        const msg = save_Group_Message(p_user.username, groupname, text)
     });
 });
 

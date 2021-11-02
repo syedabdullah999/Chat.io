@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import "../App.css";
 import "./Home"
+// import "../index.css"
+import '../index.css';
 import { Form, Input, Button, Checkbox, Divider } from "antd";
 import axios from "axios";
 import Home from "./Home";
@@ -10,11 +12,13 @@ import Loader from "./Loader";
 import * as alertify from 'alertifyjs';
 import 'alertifyjs/build/css/alertify.css';
 import { toast } from "react-toastify";
+import { Layout, Menu, Breadcrumb,Image } from 'antd';
 toast.configure()
 
 
 
 function Register(props) {
+  const { Header, Content, Footer } = Layout;
   const [showHome, setHome] = useState(false)
   const [Load, setLoader] = useState(true)
 
@@ -85,17 +89,23 @@ function Register(props) {
     console.log("Failed:ddddddddddddd", errorInfo);
   };
   return (
-    
+    <>
     <div className="registerForm">
       <strong>
-    <h1 className = "heading"> REGISTER</h1></strong>
-    <Form
+    <h1 className = "heading" style={{color: "#b7acac"}}> REGISTER</h1></strong>
+    <strong>
+    <Form className="aligntext"
+
+style={{color: "#b7acac"}}
       name="basic"
+      
       labelCol={{
-        span: 8
+        span: 8,
+        color: "#b7acac"
       }}
       wrapperCol={{
-        span: 9
+        span: 9,
+        color: "#b7acac"
       }}
       initialValues={{
         remember: true
@@ -104,13 +114,16 @@ function Register(props) {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <Form.Item
+      <Form.Item className="aligntext"
+      
         label="Name"
         name="userName"
+        color="white"
         rules={[
           {
             required: true,
-            message: "Please input your username!"
+            message: "Please input your username!",
+            color:"white"
           }
         ]}
       >
@@ -175,10 +188,11 @@ function Register(props) {
         valuePropName="checked"
         wrapperCol={{
           offset: 8,
-          span: 16
+          span: 16,
+          color: "#b7acac"
         }}
       >
-        <Checkbox>Remember me</Checkbox>
+        <Checkbox style={{color: "#b7acac"}}>Remember me</Checkbox>
       </Form.Item>
 
       <Form.Item
@@ -192,7 +206,10 @@ function Register(props) {
         </Button>
       </Form.Item>
     </Form>
+    </strong>
     </div>
+    
+    </>
   );
 
 };

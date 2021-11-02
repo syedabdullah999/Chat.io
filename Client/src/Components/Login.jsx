@@ -15,22 +15,17 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useSelector, useDispatch, connect } from 'react-redux';
 import { loginAction } from '../actions'
 import { useParams, useLocation, useHistory, useRouteMatch } from 'react-router-dom';
+import Calendar2 from './Callender';
+import { Layout, Menu, Breadcrumb,Image } from 'antd';
+// import Footer from 'antd'
 
 toast.configure()
-
-
-
-
-
 const Login = ({ props, socket }) => {
+  const { Header, Content, Footer } = Layout;
 
   // let socket = socket
   const history = useHistory();
-
-
-
   const name = useSelector(state => state.SignIn.token.name)
-
   const [register, setRegister] = useState(false)
   const [Load, setLoader] = useState(false)
   const [Load2, setLoader2] = useState(false)
@@ -42,8 +37,6 @@ const Login = ({ props, socket }) => {
   // console.log("store item", signin);
 
   //// to modify item in redux store
-
-
   useEffect(() => {
     var user = JSON.parse(localStorage.getItem('user'));
     console.log("local storage dataa   ", user);
@@ -63,23 +56,10 @@ const Login = ({ props, socket }) => {
       } else {
         alert("username and roomname are must !");
         // window.location.reload();
-      }
-
-
-      
+      }  
         history.push("/home")
-
-
-
-
-
     }
   }, []);
-
-
-
-
-
 
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
@@ -140,9 +120,13 @@ const Login = ({ props, socket }) => {
         const login = res.data.token
         console.log(login);
         // setHome(false)
-
+        // toast.configure({
+        //   zindex : 999999
+        // });
         toast.success('Successfull Login', {
-          position: toast.POSITION.BOTTOM_RIGHT})
+          position: toast.POSITION.BOTTOM_RIGHT,
+          zIndex:999999999
+        })
 
 
       }).catch((e) => {
@@ -198,11 +182,12 @@ const Login = ({ props, socket }) => {
 
   return (
     <>
-      <div className="BackgroundColour">
+      {/* <div className="BackgroundColour"> */}
+      
         <div className="loginForm">
 
           <strong>
-            <h1 className="heading1"> LOGIN</h1></strong>
+            <h1 className="heading1" style={{color: "#b7acac"}}> LOGIN</h1></strong>
           <Form
             name="normal_login"
             className="login-form"
@@ -239,7 +224,7 @@ const Login = ({ props, socket }) => {
             </Form.Item>
             <Form.Item>
               <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>Remember me</Checkbox>
+                <Checkbox style={{color: "#b7acac"}}>Remember me</Checkbox>
               </Form.Item>
 
               <a className="login-form-forgot" href="">
@@ -251,11 +236,14 @@ const Login = ({ props, socket }) => {
               <Button type="primary" htmlType="submit" className="login-form-button">
                 Log in
               </Button>
-              Or <a onClick={() => OnClickRegister()} >register now!</a>
+              
+               <a onClick={() => OnClickRegister()} style={{color: "#b7acac"}}><strong>Or register now! </strong></a>
             </Form.Item>
           </Form>
         </div>
-      </div></>
+        <Footer className="footer" style={{ backgroundColor:'rgb(33, 15, 53)', textAlign: 'center end', color:"#b7acac"}}>Chat.io ©2021 Created by Syed Abdullah</Footer>
+      {/* </div> */}
+      </>
   );
 };
 

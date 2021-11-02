@@ -20,6 +20,9 @@ import Chat from "./Chat";
 import Loader from "./Loader";
 import BackGround from "./Background";
 import UsersList from "./UsersList";
+import BackgroundImage from "./backgroundImage";
+import Calendar2 from "./Callender"
+
 toast.configure()
 
 
@@ -35,8 +38,9 @@ function Home({ socket }) {
   // const [username, setUserName] = useState()
 
 
-
-
+  // useEffect(() => {
+  //   history.push(`/`)
+  // }, [socket]);
   useEffect(() => {
     var user = JSON.parse(localStorage.getItem('user'));
     if(user == null){
@@ -47,12 +51,13 @@ function Home({ socket }) {
 
   return (
     <>
-    <div className="Home">
-    
+
       <Headers socket={socket} />
       <UsersList socket={socket} />
-      <Footer className="footer" style={{ backgroundColor:'#B0B0B0', textAlign: 'center end' }}>Chat.io ©2021 Created by Syed Abdullah</Footer>
-    </div>
+
+      <Footer className="footer" style={{ backgroundColor:'rgb(33, 15, 53) ', textAlign: 'center end',color: "#b7acac"}}>Chat.io ©2021 Created by Syed Abdullah</Footer>
+
+      
     
     </>
   )

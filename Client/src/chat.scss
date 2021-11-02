@@ -29,7 +29,7 @@
 
 .chatBoxLeft{
   position: fixed;
-  top: 50%;
+  top: 51.5%;
   left: 50%;
   border-radius: 5px;
   transform: translate(-50%, -50%);
@@ -46,7 +46,7 @@
   width: 350%;
   margin-left: -125%;
   height: 796px;
-  background-color: rgb(66, 148, 173)!important ;
+  background-color: rgb(33, 15, 53)!important ;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -70,16 +70,19 @@
     flex-direction: column;
     width: 100%;
     align-content: flex-start;
+    
 
     .message {
       word-break: break-all;
+      max-width: fit-content;
       margin-left: 0px;
-      max-width: 200px;
+      // max-width: 200px;
       padding-left: 0.5rem;
       margin-bottom: 5px;
       p {
         font-size: 1rem;
-        background-color: DarkSlateGrey;
+        background-color: #40275a;
+        word-break: break-all;
         padding: 0.4rem 0.8REM;
         border-radius: 0px 10px 10px 10px;
         font-weight: 300;
@@ -92,6 +95,7 @@
         font-weight: 200;
         color: #000000;
         padding-left: 0.5rem;
+        font-size: 92%;
       }
     }
     .mess-right {
@@ -104,15 +108,17 @@
       p {
         text-align: end;
         border-radius: 10px 0px 10px 10px;
-        background-color:rgb(18, 82, 119);
+        background-color:#4f1a7e;
         color: white;
       }
       span {
         width: 100%;
+        font-size: 92%;
         text-align: end;
         padding-left: 0rem;
         padding-right: 0.5rem;
         margin-top: 5px;
+        text-size-adjust: 20%;
       }
     }
   }
@@ -135,7 +141,7 @@
     button {
       width: 20%;
       border: none;
-      background-color:DarkSlateGrey;
+      background-color:#40275a;
       border-radius: 0px 5px 5px 0px;
       color: white;
       &:hover {

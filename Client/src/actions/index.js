@@ -1,7 +1,7 @@
 export const loginAction = (token, name, socketId) => {
-  console.log("action token : ",token);
+  console.log("action token : ", token);
 
-  return{
+  return {
     type: 'LogIn',
     dispatch: {
       name,
@@ -10,4 +10,3 @@ export const loginAction = (token, name, socketId) => {
     }
   };
 };
-   

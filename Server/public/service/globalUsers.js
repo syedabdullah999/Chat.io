@@ -14,10 +14,10 @@ function join_User(id, username, room) {
 console.log("user out", c_users);
 
 // Gets a particular user id to return the current user
-function get_Current_User(id) {
+async function get_Current_User(id) {
   console.log("user id = ",id);
   console.log();
-  let result = (c_users.find((p_user) => p_user.id == id))
+  let result = await (c_users.find((p_user) => p_user.id == id))
   console.log("result for find by id = ",result);
   return result
 }

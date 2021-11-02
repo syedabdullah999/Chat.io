@@ -111,25 +111,28 @@ function CreateGroup({socket}) {
     <>
       <Headers />
       {/* <div className="createGroup"> */}
+      {/* <div className="create-group-modal"> */}
       <Modal show={show} onHide={handleClose} className="createGroup">
-        <Modal.Header closeButton>
-          <Modal.Title>Create Group </Modal.Title>
+        <Modal.Header closeButton className="modal-color">
+          <Modal.Title style={{color: "#b7acac"}} >Create Group </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="modal-color">
           <Input
             placeholder="Group Name"
             onChange={(e) =>
               setGroupName(e.target.value)}
           ></Input>
-          <span>{members}</span>
+          <span style={{color: "#b7acac"}}>{members}</span>
           {/* <span>-----------</span> */}
           {/* <Modal.Title>Add participants</Modal.Title> */}
-          <List
+          <List  className="userHover"
+          style={{color: "#b7acac"}}
             itemLayout="horizontal"
             dataSource={users}
             renderItem={(item, ind) => (
               <List.Item key={ind}>
                 <List.Item.Meta
+                style={{color: "#b7acac"}}
                   // avatar={<Avatar src="https://img.icons8.com/fluency/48/000000/person-male.png" />}
                   title={<a onClick={() => {
                     // let temp = ""
@@ -144,7 +147,7 @@ function CreateGroup({socket}) {
                     console.log(members);
                   }}
 
-                  >{item.title} </a>}
+                  style={{color: "#b7acac"}}>{item.title} </a>}
 
 
                 />
@@ -155,16 +158,17 @@ function CreateGroup({socket}) {
 
 
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+        <Modal.Footer className="modal-color">
+          <Button variant="secondary" onClick={handleClose} style={{ color:"white", background: "DarkSlateGrey", borderColor: "black"  , borderRadius: "20px"}} >
             Close
           </Button>
-          <Button variant="primary" onClick={newGroup}>
+          <Button variant="primary" onClick={newGroup} style={{ color:"white", background: "DarkSlateGrey", borderColor: "black"  , borderRadius: "20px"}}>
             Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
       {/* </div> */}
+      
     </>
   );
 }

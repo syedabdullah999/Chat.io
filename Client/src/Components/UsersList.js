@@ -18,6 +18,7 @@ import Headers from "./Headers";
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import Home from "./Home";
+import Calendar2 from "./Callender"
 
 
 
@@ -26,8 +27,11 @@ import Home from "./Home";
 function UsersList({ socket }) {
 
     const history = useHistory();
-    const name = useSelector(state => state.SignIn.token.name)
-    const token = useSelector(state => state.SignIn.token.token)
+    var user = JSON.parse(localStorage.getItem('user'));
+    // const name = useSelector(state => state.SignIn.token.name)
+    // const token = useSelector(state => state.SignIn.token.token)
+    const name = user.name
+    const token = user.token
     const [box, setBox] = useState(false)
     // console.log("store item", token);
     const [userGroups, setUserGroups] = useState([{}])
@@ -158,7 +162,7 @@ function UsersList({ socket }) {
 
             <div className="userList">
 
-                <h1>Groups</h1>
+                <h1 style={{color: "#b7acac"}}>Groups</h1>
                 <List className="userHover"
                     itemLayout="horizontal"
                     dataSource={userGroups}
@@ -166,7 +170,7 @@ function UsersList({ socket }) {
                         <List.Item key={ind}>
                             <List.Item.Meta
                                 avatar={<Avatar src="https://img.icons8.com/ios-filled/50/000000/group-foreground-selected.png" />}
-                                title={onclick = <Link to={`/groupChat/${item.title}`}>{item.title}</Link>}
+                                title={onclick = <Link style={{color: "#b7acac"}} to={`/groupChat/${item.title}`}>{item.title}</Link>}style={{color: "#b7acac"}}
 
                             />
                         </List.Item>
@@ -181,15 +185,19 @@ function UsersList({ socket }) {
 
                 <div className="gap"></div>
 
-                <h1> User List </h1>
+                <h1 style={{color: "#b7acac"}}> Contacts  </h1>
                 <List className="userHover"
+                style={{color: "white"}}
                     itemLayout="horizontal"
                     dataSource={users}
                     renderItem={(item, ind) => (
-                        <List.Item key={ind}>
+                        <List.Item 
+                        style={{color: "white"}}
+                        key={ind}>
                             <List.Item.Meta
+                            style={{color: "white"}}
                                 avatar={<Avatar src="https://img.icons8.com/fluency/48/000000/person-male.png" />}
-                                title={<a onClick={chatBoxes}
+                                title={<a onClick={chatBoxes}style={{color: "#b7acac"}}
 
                                 >{item.title}</a>}
 
@@ -201,7 +209,8 @@ function UsersList({ socket }) {
 
             </div>
             <div className="onlineUsers">
-                <List
+                <List className="userHover"
+                style={{color: "#b7acac"}}
                     header="Online"
                     itemLayout="horizontal"
                     dataSource={onlineUsers}
@@ -210,7 +219,7 @@ function UsersList({ socket }) {
                             <List.Item.Meta
                                 avatar={<Avatar src="https://img.icons8.com/fluency/48/000000/person-male.png" />}
                                 // {...item.title != name}
-                                title={onclick = <Link to={`/oneChat/${item.id}/${item.title}`}>{item.title}</Link>}
+                                title={onclick = <Link style={{color: "#b7acac"}} to={`/oneChat/${item.id}/${item.title}`}>{item.title}</Link>}
                             // <a 
                             //     // href={[<Link to={`/oneChat/${item.id}/${item.title}`}/>]}
 
@@ -224,6 +233,7 @@ function UsersList({ socket }) {
                     )}
                 />
             </div>
+            {/* <Calendar2 /> */}
         </>
 
     )
