@@ -254,9 +254,10 @@ io.on("connection", (socket) => {
     socket.on("groupChatMessage", (text, groupname) => {
         console.log("inside chat socket", text, groupname);
         //gets the room user and the message sent
-        const p_user = get_Current_Group_User(socket.id);
+        const p_user = get_Current_Group_User(socket.id,groupname);
         
         console.log("socket.id = ", socket.id)
+
 
 
         console.log("p_users = ", p_user);

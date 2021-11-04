@@ -14,10 +14,11 @@ function join_Group_User(id, username, room) {
 console.log("user out", g_users);
 
 // Gets a particular user id to return the current user
-function get_Current_Group_User(id) {
+ function get_Current_Group_User(id,room) {
   console.log("user id = ",id);
+  console.log("user roomname = ",id);
   console.log();
-  let result = (g_users.find((n_user) => n_user.id == id))
+  let result =  (g_users.find((n_user) => n_user.id == id && n_user.room == room))
   console.log("result for find by id = ",result);
   return result
 }

@@ -75,15 +75,15 @@
 
     .message {
       word-break: break-all;
-      max-width: fit-content;
+      // max-width: 75%;
       margin-left: 0px;
-      // max-width: 200px;
+      max-width: 200px;
       padding-left: 0.5rem;
       margin-bottom: 5px;
       p {
         font-size: 1rem;
         background-color: #40275a;
-        word-break: break-all;
+        
         padding: 0.4rem 0.8REM;
         border-radius: 0px 10px 10px 10px;
         font-weight: 300;
@@ -101,13 +101,15 @@
     }
     .mess-right {
       margin-left: auto;
-      margin-right: 0px;
+      margin-right: 10px;
+      // max-width: 75%;
       display: flex;
       flex-direction: column;
-      max-width: 220px;
+      // max-width: 220px;
       padding-right: 0.5rem;
       p {
         text-align: end;
+        padding: 0.4rem 0.8REM;
         border-radius: 10px 0px 10px 10px;
         background-color:#4f1a7e;
         color: white;
@@ -129,7 +131,7 @@
     height: 50px;
     display: flex;
     input {
-      width: 81%;
+      width: 86%;
       text-decoration: none;
       background-color: #fefeff;
       border: none;
@@ -140,14 +142,14 @@
       }
     }
     button {
-      width: 13%;
+      width: 11%;
       border: none;
       background-color:#40275a;
       border-radius: 0px 5px 5px 0px;
       color: white;
       margin-top: -2px;
       border-radius: 30px;
-      margin-left: 72px;
+      margin-left: 17px;
       &:hover {
         cursor: pointer;
       }

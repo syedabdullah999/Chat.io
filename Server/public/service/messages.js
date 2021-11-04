@@ -13,7 +13,7 @@ async function save_Message(username, message) {
     console.log("aaaaaaaaaaaaaa");
     const history2 = await History.findOne({ roomName: roomname });
     // console.log("responseeeee", history2);
-    if (history2) {
+    if (!history2) {
         console.log("inside saving data to history db");
         let obj = {
             roomName: roomname,

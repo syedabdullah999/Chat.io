@@ -219,10 +219,6 @@ function Chat({ username, roomname, socket }) {
 
   return (
     <>
-
-
-
-
       <Loader load={load} />
       <Home socket={socket} />
       {chatbox == true &&
@@ -257,8 +253,8 @@ function Chat({ username, roomname, socket }) {
                   <div ref={messagesEndRef} />
                 </div>
 
-                <span style={{color: "#b7acac"}}>{uName}{typingggg}</span>
 
+                <span style={{color: "#b7acac"}}>{uName}{typingggg}</span>
                 <div className="send" >
                   <input
                     placeholder="Enter Your Message"
@@ -275,11 +271,12 @@ function Chat({ username, roomname, socket }) {
                           type = false
                           socket.emit('typing', { user: username, typing: type })
                         }, 4000);
-                      } if (!e) {
-                        console.log("not pressing key");
-                        type = false
-                        socket.emit('typing', { user: username, typing: type })
-                      }
+                      } 
+                      // if (!e) {
+                      //   console.log("not pressing key");
+                      //   type = false
+                      //   socket.emit('typing', { user: username, typing: type })
+                      // }
 
 
 
@@ -294,7 +291,7 @@ function Chat({ username, roomname, socket }) {
                   <button onClick={sendData}>Send</button>
                 </div>
               </div>
-              {/* <button onClick={onlineUsers}>Send</button> */}
+
             </div>
           </div>
         </Modal>

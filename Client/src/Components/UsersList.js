@@ -33,6 +33,8 @@ function UsersList({ socket }) {
     const name = user.name
     const token = user.token
     const [box, setBox] = useState(false)
+    const [contentG, setContentG] = useState(true)
+    const [contentU, setContentU] = useState(true)
     // console.log("store item", token);
     const [userGroups, setUserGroups] = useState([{}])
 
@@ -69,6 +71,7 @@ function UsersList({ socket }) {
                 // setUsers(data)
                 console.log(data);
                 setUsers(data)
+                setContentU(false)
             }).catch((e) => {
 
                 console.log("error response", e)
@@ -99,7 +102,7 @@ function UsersList({ socket }) {
             })
             clearInterval(a)
         }, 100)
-
+        
     }, []);
 
     useEffect(() => {
@@ -131,6 +134,7 @@ function UsersList({ socket }) {
                 // setUsers(data)
                 console.log("user groups final  :   ", data);
                 setUserGroups(data)
+                setContentG(false)
             }).catch((e) => {
 
                 console.log("error response", e)
@@ -166,12 +170,19 @@ function UsersList({ socket }) {
                 <List className="userHover"
                     itemLayout="horizontal"
                     dataSource={userGroups}
+                    loading={contentG}
+                    // bordered={false}
+                    split={false}
+                    
                     renderItem={(item, ind) => (
-                        <List.Item key={ind}>
+                        <List.Item 
+                        style={{color: "white"}}
+                        key={ind}>
+                            
                             <List.Item.Meta
                                 avatar={<Avatar src="https://img.icons8.com/ios-filled/50/000000/group-foreground-selected.png" />}
                                 title={onclick = <Link style={{color: "#b7acac"}} to={`/groupChat/${item.title}`}>{item.title}</Link>}style={{color: "#b7acac"}}
-
+                                
                             />
                         </List.Item>
 
@@ -190,6 +201,8 @@ function UsersList({ socket }) {
                 style={{color: "white"}}
                     itemLayout="horizontal"
                     dataSource={users}
+                    split={false}
+                    loading={contentU}
                     renderItem={(item, ind) => (
                         <List.Item 
                         style={{color: "white"}}
@@ -214,11 +227,17 @@ function UsersList({ socket }) {
                     header="Online"
                     itemLayout="horizontal"
                     dataSource={onlineUsers}
+                    split={false}
+                    
                     renderItem={(item, ind) => (
+                        
+                        
+                        
                         <List.Item key={ind}>
                             <List.Item.Meta
                                 avatar={<Avatar src="https://img.icons8.com/fluency/48/000000/person-male.png" />}
                                 // {...item.title != name}
+                                
                                 title={onclick = <Link style={{color: "#b7acac"}} to={`/oneChat/${item.id}/${item.title}`}>{item.title}</Link>}
                             // <a 
                             //     // href={[<Link to={`/oneChat/${item.id}/${item.title}`}/>]}
@@ -229,6 +248,7 @@ function UsersList({ socket }) {
                             />
 
                         </List.Item>
+                        
 
                     )}
                 />

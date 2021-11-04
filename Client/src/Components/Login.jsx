@@ -16,10 +16,13 @@ import { useSelector, useDispatch, connect } from 'react-redux';
 import { loginAction } from '../actions'
 import { useParams, useLocation, useHistory, useRouteMatch } from 'react-router-dom';
 import Calendar2 from './Callender';
-import { Layout, Menu, Breadcrumb,Image } from 'antd';
+import { Layout, Menu, Breadcrumb, Image } from 'antd';
+import { bounce } from 'react-animations';
+import styled, { keyframes } from 'styled-components';
 // import Footer from 'antd'
 
 toast.configure()
+const Bounce= styled.div`animation: 2s ${keyframes`${bounce}`} infinite`;
 const Login = ({ props, socket }) => {
   const { Header, Content, Footer } = Layout;
 
@@ -56,11 +59,14 @@ const Login = ({ props, socket }) => {
       } else {
         alert("username and roomname are must !");
         // window.location.reload();
-      }  
-        history.push("/home")
+      }
+      history.push("/home")
     }
   }, []);
 
+  const ForgetPassword = ()=>{
+    
+  }
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
 
@@ -125,7 +131,7 @@ const Login = ({ props, socket }) => {
         // });
         toast.success('Successfull Login', {
           position: toast.POSITION.BOTTOM_RIGHT,
-          zIndex:999999999
+
         })
 
 
@@ -183,67 +189,67 @@ const Login = ({ props, socket }) => {
   return (
     <>
       {/* <div className="BackgroundColour"> */}
-      
-        <div className="loginForm">
+      <Bounce ><h1 className="bounceHeading" style={{ color: "#633792" }}>Welcome To Chat.io</h1></Bounce>
+      <div className="loginForm">
 
-          <strong>
-            <h1 className="heading1" style={{color: "#b7acac"}}> LOGIN</h1></strong>
-          <Form
-            name="normal_login"
-            className="login-form"
-            initialValues={{
-              remember: true,
-            }}
-            onFinish={onFinish}
+        <strong>
+          <h1 className="heading1" style={{ color: "#b7acac" }}> LOGIN</h1></strong>
+        <Form
+          name="normal_login"
+          className="login-form"
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onFinish}
+        >
+          <Form.Item
+            name="userName"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your Username!',
+              },
+            ]}
           >
-            <Form.Item
-              name="userName"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your Username!',
-                },
-              ]}
-            >
-              <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-            </Form.Item>
-            <Form.Item
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your Password!',
-                },
-              ]}
-            >
-              <Input
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                placeholder="Password"
-              />
-            </Form.Item>
-            <Form.Item>
-              <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox style={{color: "#b7acac"}}>Remember me</Checkbox>
-              </Form.Item>
-
-              <a className="login-form-forgot" href="">
-                Forgot password
-              </a>
+            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your Password!',
+              },
+            ]}
+          >
+            <Input
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="Password"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Form.Item name="remember" valuePropName="checked" noStyle>
+              <Checkbox style={{ color: "#b7acac" }}>Remember me</Checkbox>
             </Form.Item>
 
-            <Form.Item>
-              <Button type="primary" htmlType="submit" className="login-form-button">
-                Log in
-              </Button>
-              
-               <a onClick={() => OnClickRegister()} style={{color: "#b7acac"}}><strong>Or register now! </strong></a>
-            </Form.Item>
-          </Form>
-        </div>
-        <Footer className="footer" style={{ backgroundColor:'rgb(33, 15, 53)', textAlign: 'center end', color:"#b7acac"}}>Chat.io ©2021 Created by Syed Abdullah</Footer>
+            <a className="login-form-forgot" href="" onClick={()=> ForgetPassword()}>
+              Forgot password
+            </a>
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" style={{ backgroundColor:"#40275a", borderColor:"#40275a"}} htmlType="submit" className="login-form-button">
+              Log in
+            </Button>
+
+            <a onClick={() => OnClickRegister()} style={{ color: "#b7acac" }}><strong>Or register now! </strong></a>
+          </Form.Item>
+        </Form>
+      </div>
+      <Footer className="footer" style={{ backgroundColor: 'rgb(33, 15, 53)', textAlign: 'center end', color: "#b7acac" }}>Chat.io ©2021 Created by Syed Abdullah</Footer>
       {/* </div> */}
-      </>
+    </>
   );
 };
 

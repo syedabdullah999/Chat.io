@@ -41,6 +41,13 @@ code {
   transform: translate(-50%, -50%);
   width: 80%;
   text-align: left;
+  background-color: #ffffff10;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgb(77, 77, 77); /* Fallback for older browsers without RGBA-support */
+  background: rgba(0, 0, 0, 0.171);
+  border-radius: 50%;
+    
   
   
 }
@@ -61,6 +68,9 @@ code {
   /* padding-right: -10px; */
   width:550px;
   height: 500px;
+  background-color: #ffffff10;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   /* position:relative; */
   background: rgb(77, 77, 77); /* Fallback for older browsers without RGBA-support */
   background: rgba(0, 0, 0, 0.171);
@@ -72,6 +82,7 @@ code {
   position: absolute !important;
   top: 50%;
   left: 50%;
+  color: #633792;
   transform: translate(-50%, -50%);
 }
 .userHover{
@@ -81,11 +92,23 @@ code {
   height: 300px;
   margin-left: 10%;
   
+  
 }
 
 .userHover::-webkit-scrollbar {
-  display: none;
+  width: 9px;
+    height: 9px;
 }
+.userHover::-webkit-scrollbar-thumb {
+  background: #40275a;
+  border-radius: 10px;
+  
+}
+.userHover::-webkit-scrollbar-track {
+  background: rgba(229, 186, 240, 0.568);
+  border-radius: 10px;
+}
+
 .image-set2{
   height: 100vh;
   BACKGROUND-POSITION-X: LEFT;
@@ -143,12 +166,20 @@ code {
 }
 .createGroup{
   margin-top: 3%;
-  border-radius: 15px;
+  /* border-radius: 15px; */
   margin-bottom: 10%;
 }
 .logout{
   margin-top: 10%;
   padding-top: 20%;
+}
+a{
+  text-decoration: none !important;
+}
+.bounceHeading{
+  /* position: fixed !important; */
+  margin-top: -42%;
+  margin-left: 40.5%;
 }
 .chat-box{
   position: absolute;

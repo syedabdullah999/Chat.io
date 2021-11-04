@@ -129,6 +129,7 @@ function CreateGroup({socket}) {
           style={{color: "#b7acac"}}
             itemLayout="horizontal"
             dataSource={users}
+            split={false}
             renderItem={(item, ind) => (
               <List.Item key={ind}>
                 <List.Item.Meta

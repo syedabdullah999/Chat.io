@@ -29,6 +29,7 @@ function GroupList() {
                 <h1> User List </h1>
                 <List
                     itemLayout="horizontal"
+                    
                     dataSource={users}
                     renderItem={(item, ind) => (
                         <List.Item key={ind}>

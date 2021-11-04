@@ -98,11 +98,13 @@ function App() {
                 description:
                 ans,
                 duration: 4,
+                // onClick:
             };
             notification.config({
                 placement: 'bottomRight',
                 bottom: 50,
                 duration: 4,
+                
                 // rtl: true,
                 
               });

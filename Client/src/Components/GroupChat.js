@@ -290,11 +290,12 @@ function GroupChat({ username, groupname, socket }) {
                                                 socket.emit('typingg', { user: username, typing: type })
                                             }, 4000);
 
-                                        } if (!e) {
-                                            console.log("not pressing key");
-                                            type = false
-                                            socket.emit('typingg', { user: username, typing: type })
-                                        }
+                                        } 
+                                        // if (!e) {
+                                        //     console.log("not pressing key");
+                                        //     type = false
+                                        //     socket.emit('typingg', { user: username, typing: type })
+                                        // }
 
 
 
