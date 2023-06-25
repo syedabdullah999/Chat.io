@@ -6,9 +6,7 @@ const key = "mongodb+srv://Syed:Abcd@1234+@cluster1.8rjhedc.mongodb.net/users?re
 mongoose.connect(key,connectionOptions);
 mongoose.Promise = global.Promise;
 
-module.exports = {
-    User: require('../public/model/model'),
-    Groups: require('../public/model/groupModel'),
-    History: require('../public/model/globalChatHistory') ,
-    OneToOneChat : require('../public/model/OneChatHistoryModel')
-};
+export const User = require('../public/model/model');
+export const Groups = require('../public/model/groupModel');
+export const History = require('../public/model/globalChatHistory');
+export const OneToOneChat = require('../public/model/OneChatHistoryModel');

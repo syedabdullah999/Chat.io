@@ -1,10 +1,12 @@
 ﻿// import config from 'config.json';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-const db = require('_helpers/db');
+// const db = require('_helpers/db');
 import { json } from 'body-parser';
-const User = db.User;
-const Groups = db.Groups;
+import { User } from '../../_helpers/db';
+import { Groups } from '../../_helpers/db';
+// const User = db.User;
+// const Groups = db.Groups;
 
 module.exports = {
     authenticate,

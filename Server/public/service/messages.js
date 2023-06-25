@@ -1,6 +1,7 @@
 import { json } from 'body-parser';
-const db = require('_helpers/db');
-const History = db.History;
+// const db = require('_helpers/db');
+import { History } from '../../_helpers/db';
+// const History = History;
 
 
 
