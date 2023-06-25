@@ -4,7 +4,7 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 // const jwt = require('_helpers/jwt');
-import { jwt } from '_helpers/jwt';
+import jwt from './_helpers/jwt';
 const errorHandler = require('_helpers/error-handler');
 
 const socket = require("socket.io");
