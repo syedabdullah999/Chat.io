@@ -27,7 +27,7 @@ app.use(cors({
 }));
 app.use(express.json())
 // use JWT auth to secure the api
-app.use(jwt());
+// app.use(jwt());
 
 // api routes
 app.get('/',(req,res,next)=>{
