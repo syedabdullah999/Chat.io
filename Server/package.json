@@ -2,12 +2,13 @@
     "name": "node-mongo-registration-login-api",
     "version": "1.0.0",
     "description": "registration and authentication",
-    "license": "MIT",
+    "license": "ISC",
     "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node server.js"
     },
+    "keywords": [],
     "dependencies": {
         "axios": "^0.22.0",
         "bcryptjs": "^2.4.3",
