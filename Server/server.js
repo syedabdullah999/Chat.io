@@ -25,6 +25,7 @@ app.use(cors({
     methods:["POST","GET"],
     credentials: true
 }));
+app.use(express.json())
 // use JWT auth to secure the api
 app.use(jwt());
 
