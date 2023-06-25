@@ -2,7 +2,7 @@
   "name": "chat-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://10.0.12.95:4000/",
+  "proxy": "https://chat-io-five.vercel.app/",
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@testing-library/jest-dom": "^5.14.1",
@@ -57,5 +57,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": "16.20.1"
   }
+  
 }
