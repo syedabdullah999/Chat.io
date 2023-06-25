@@ -1,11 +1,11 @@
 import expressJwt from 'express-jwt';
-import config from 'config.json';
+// import config from 'config.json';
 import userService from '../public/service/service.js';
 
 module.exports = jwt;
 
 function jwt() {
-    const secret = config.secret;
+    const secret = "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING";
     return expressJwt({ secret, algorithms: ['HS256'], isRevoked }).unless({
         path: [
             // public routes that don't require authentication
