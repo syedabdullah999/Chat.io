@@ -14,7 +14,6 @@ import { get_All_Messages, save_Message } from './public/service/messages.js';
 import { get_All_Group_Messages, save_Group_Message } from './public/service/groupMessages.js';
 import { get_All_One_Chat_Messages, save_One_Chat_Message } from './public/service/oneChatMessages.js';
 
-import { on } from 'nodemon';
 let userId = ""
 
 app.use(bodyParser.urlencoded({ extended: false }));
