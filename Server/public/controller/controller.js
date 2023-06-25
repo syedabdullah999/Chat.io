@@ -39,11 +39,10 @@ function register(req, res, next) {
 
 
 function getAll(req, res, next) {
-    // userService.getAll()
-    // // .then(users => console.log("hello   :   ",users.map(u => u.userName))) 
-    // .then(users => res.json(users))
-    // .catch(err => next(err));
-    res.json("hello");
+    userService.getAll()
+    // .then(users => console.log("hello   :   ",users.map(u => u.userName))) 
+    .then(users => res.json(users))
+    .catch(err => next(err));
 }
 
 function getCurrent(req, res, next) {
