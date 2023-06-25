@@ -1,7 +1,7 @@
 ﻿// import config from 'config.json';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import db from '_helpers/db.js';
+import db from './_helpers/db.js';
 import { json } from 'body-parser';
 const User = db.User;
 const Groups = db.Groups;
