@@ -2,7 +2,7 @@
 import mongoose from 'mongoose';
 const connectionOptions = { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false };
 // mongoose.connect(process.env.MONGODB_URI || config.connectionString, connectionOptions);
-const key = "mongodb+srv://Syed:Abcd%401234%2B@cluster1.8rjhedc.mongodb.net/?retryWrites=true&w=majority"
+const key = "mongodb+srv://Syed:Abcd%401234%2B@cluster1.8rjhedc.mongodb.net/user?retryWrites=true&w=majority"
 mongoose.connect(key,connectionOptions);
 mongoose.Promise = global.Promise;
 
