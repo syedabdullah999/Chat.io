@@ -19,7 +19,11 @@ let userId = ""
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+    orgin: [""],
+    methods:["POST","GET"],
+    credentials: true
+}));
 
 // use JWT auth to secure the api
 app.use(jwt());
