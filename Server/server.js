@@ -20,7 +20,7 @@ let userId = ""
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors({
-    orgin: [""],
+    orgin: ["https://chat-io-9hxb.vercel.app"],
     methods:["POST","GET"],
     credentials: true
 }));
