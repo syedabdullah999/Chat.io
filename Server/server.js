@@ -24,14 +24,15 @@ app.use(cors({
     methods:["POST","GET"],
     credentials: true
 }));
-
 // use JWT auth to secure the api
 app.use(jwt());
 
 // api routes
-app.get("/",(req,res) => {
-    res.json("hello");
-})
+app.get('*',(req,res,next)=>{
+    res.status(200).json({
+      message:'bad request'
+    })
+  })
 app.use('/users', require('./public/controller/controller'));
 
 app.use(errorHandler);
