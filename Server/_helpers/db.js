@@ -2,7 +2,7 @@ const config = require('config.json');
 const mongoose = require('mongoose');
 const connectionOptions = { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false };
 // mongoose.connect(process.env.MONGODB_URI || config.connectionString, connectionOptions);
-const key = "mongodb+srv://Syed:Abcd@1234+@cluster1.8rjhedc.mongodb.net/?retryWrites=true&w=majority"
+const key = "mongodb+srv://Syed:Abcd@1234+@cluster1.8rjhedc.mongodb.net/users?retryWrites=true&w=majority"
 mongoose.connect(key,{
     useNewUrlParser: true
 });
