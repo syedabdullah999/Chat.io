@@ -41,6 +41,8 @@ function CreateGroup({socket}) {
 
 
   useEffect(() => {
+    // for local pc
+    // REACT_APP_BaseUrl = 'http://10.0.12.95:4000/users'
 
     axios.get(process.env.REACT_APP_BaseUrl, { headers: { "Authorization": `Bearer ${token}` } })
       .then(res => {
