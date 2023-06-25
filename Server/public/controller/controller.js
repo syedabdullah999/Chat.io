@@ -1,8 +1,8 @@
-﻿const express = require('express');
+﻿import express from 'express';
 const router = express.Router();
-const userService = require('../service/service');
-// const socketService = require('../service/socket')
-const axios = require('axios');
+import userService from '../service/service.js';
+// import socketService from '../service/socket.js'
+import axios from 'axios';
 
 // routes
 router.post('/authenticate', authenticate);

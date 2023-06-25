@@ -1,21 +1,20 @@
 ﻿require('rootpath')();
-const express = require('express');
+import express from 'express';
 const app = express();
-const cors = require('cors');
-const bodyParser = require('body-parser');
-// const jwt = require('_helpers/jwt');
-import jwt from './_helpers/jwt';
-const errorHandler = require('_helpers/error-handler');
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import jwt from './_helpers/jwt.js';
+import errorHandler from './_helpers/error-handler.js';
 
-const socket = require("socket.io");
-const color = require("colors");
-const { get_Current_User, user_Disconnect, join_User, get_All_User } = require("./public/service/globalUsers");
-const { get_Current_Group_User, join_Group_User } = require("./public/service/groupChatUsers");
-const { get_All_Messages, save_Message } = require("./public/service/messages")
-const { get_All_Group_Messages, save_Group_Message } = require("./public/service/groupMessages")
-const { get_All_One_Chat_Messages, save_One_Chat_Message } = require("./public/service/oneChatMessages")
-// const {  }
-const { on } = require('nodemon');
+import socket from 'socket.io';
+import color from 'colors';
+import { get_Current_User, user_Disconnect, join_User, get_All_User } from './public/service/globalUsers.js';
+import { get_Current_Group_User, join_Group_User } from './public/service/groupChatUsers.js';
+import { get_All_Messages, save_Message } from './public/service/messages.js';
+import { get_All_Group_Messages, save_Group_Message } from './public/service/groupMessages.js';
+import { get_All_One_Chat_Messages, save_One_Chat_Message } from './public/service/oneChatMessages.js';
+
+import { on } from 'nodemon';
 let userId = ""
 
 app.use(bodyParser.urlencoded({ extended: false }));

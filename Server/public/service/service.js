@@ -1,8 +1,8 @@
-﻿const config = require('config.json');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const db = require('_helpers/db');
-const { json } = require('body-parser');
+﻿import config from 'config.json';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+import db from '_helpers/db.js';
+import { json } from 'body-parser';
 const User = db.User;
 const Groups = db.Groups;
 

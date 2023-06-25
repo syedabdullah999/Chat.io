@@ -1,5 +1,5 @@
-const { json } = require('body-parser');
-const db = require('_helpers/db');
+import { json } from 'body-parser';
+import db from './_helpers/db.js';
 const OneToOneChat = db.OneToOneChat;
 
 
