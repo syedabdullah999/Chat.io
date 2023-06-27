@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors({
     // orgin: ["https://chat-io-9hxb.vercel.app/"],
-    origin: '*',
+    origin: 'https://chat-io-9hxb.vercel.app/',
     methods:["POST","GET"],
     credentials: true
 }));
@@ -29,11 +29,11 @@ app.use(cors({
 app.use(jwt());
 
 // api routes
-// app.get('/',(req,res,next)=>{
-//     res.status(200).json({
-//       message:'bad request'
-//     })
-//   })
+app.get('/',(req,res,next)=>{
+    res.status(200).json({
+      message:'bad request'
+    })
+  })
 app.use('/users', require('./public/controller/controller'));
 
 app.use(errorHandler);
