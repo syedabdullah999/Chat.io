@@ -19,12 +19,12 @@ let userId = ""
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors({
+    // orgin: ["https://chat-io-9hxb.vercel.app/"],
     origin: '*',
-    methods: '*',
+    methods:["POST","GET"],
     credentials: true
-  }));
-  // orgin: ["https://chat-io-9hxb.vercel.app/"],
-app.use(express.json())
+}));
+// app.use(express.json())
 // use JWT auth to secure the api
 app.use(jwt());
 
