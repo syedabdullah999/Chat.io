@@ -1,4 +1,4 @@
-﻿// import config from 'config.json';
+﻿import config from 'config.json';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 // const db = require('_helpers/db');
