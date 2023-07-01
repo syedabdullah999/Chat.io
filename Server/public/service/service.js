@@ -1,4 +1,4 @@
-﻿import config from 'config.json';
+﻿// import config from 'config.json';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 // const db = require('_helpers/db');
@@ -26,10 +26,10 @@ async function authenticate(userParam) {
     console.log("dada   :   s", user)
     console.log(userParam.password)
     console.log(user.password)
-
+    let mySecret = "Try Not To PEEK XD"
     if (user && bcrypt.compareSync(userParam.password, user.password)) {
         console.log("password correct");
-        const token = jwt.sign({ sub: user.id }, config.secret, { expiresIn: '7d' });
+        const token = jwt.sign({ sub: user.id }, mySecret, { expiresIn: '7d' });
         return {
             ...user.toJSON(),
             token
